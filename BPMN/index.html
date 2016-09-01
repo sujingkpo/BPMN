@@ -1,0 +1,235 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BPMN流程图在线编辑器(基于HTML5)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type='text/css' rel='stylesheet' href='bpmn/skins/default/bpmn.css' />
+    <script type="text/javascript" src="bpmn/js/jquery.min.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/svg.min.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.js"></script>
+    <script type='text/javascript' charset='UTF-8' src=""></script>
+    <script>
+        $(function () {
+            //右侧画布区宽度自适应
+            var bpmn_wrapper_width = $("#bpmn_wrapper").width();
+            var figure_panel_width = $("#figure_panel").outerWidth();
+            var drawing_wrapper_width = bpmn_wrapper_width - figure_panel_width;
+            $("#drawing_wrapper").css("width", drawing_wrapper_width);
+        })
+    </script>
+</head>
+<body>
+    <div id="bpmn_wrapper">
+        <div id="figure_panel"><!--图形面板--></div>
+        <div id="drawing_wrapper">
+            <div id="drawing_toolbar"><!--工具栏--></div>
+            <div id="canvas_wrapper">
+                <canvas id="canvas_area"><!--画布区域--></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var json = {
+                "elements": {
+                    "1401480b2cd881": { //线条
+                        "text": "",
+                        "lineStyle": { "lineColor": "50,50,50", "lineStyle": "solid", "lineWidth": 2, "endArrowStyle": "solidArrow", "beginArrowStyle": "none" },
+                        "fontStyle": { "bold": false, "color": "50,50,50", "underline": false, "textAlign": "center", "italic": false, "fontFamily": "Arial", "size": 13 },
+                        "dataAttributes": [],
+                        "from": {
+                            "id": "140147fd0ac696",
+                            "angle": 3.1415927,
+                            "y": 167,
+                            "x": 634
+                        },
+                        "to": { "id": "1401480dc74a3a", "angle": 1.4835298, "y": 230, "x": 713 },
+                        "id": "1401480b2cd881",
+                        "linkerType": "broken",
+                        "name": "linker",
+                        "points": [{ "y": 167, "x": 713 }],
+                        "locked": false,
+                        "group": "",
+                        "props": { "zindex": 33 }
+                    },
+                    "140147fd0ac696": { //任务
+                        "groupName": "task",
+                        "textBlock": [{ "position": { "w": "w-20", "y": 0, "h": "h", "x": 10 }, "text": "" }],
+                        "lineStyle": { "lineColor": "50,50,50", "lineStyle": "solid", "lineWidth": 2 },
+                        "link": "",
+                        "children": [],
+                        "parent": "",
+                        "attribute": { "linkable": true, "visible": true, "container": false, "rotatable": true, "markerOffset": 5 },
+                        "fontStyle": { "orientation": "vertical", "bold": false, "color": "50,50,50", "vAlign": "middle", "underline": false, "textAlign": "center", "fontFamily": "Arial", "italic": false, "size": 13 },
+                        "resizeDir": ["tl", "tr", "br", "bl"],
+                        "dataAttributes": [
+                            { "id": "140147fd0ad0f7", "category": "default", "name": "Name", "value": "", "type": "string" },
+                            { "id": "140147fd0ad411", "category": "default", "name": "documentation", "value": "", "type": "string" },
+                            { "id": "140147fd0ad681", "category": "default", "listItems": ["", "StandardLoopCharacteristics", "MultipleLoopCharacteristics"], "name": "loopCharacteristics", "value": "", "type": "list" },
+                            { "id": "140147fd0ad9ce", "category": "default", "name": "isSequantial", "value": "true", "type": "boolean" },
+                            { "id": "140147fd0ad011", "category": "default", "name": "isForCompensation", "value": "false", "type": "boolean" },
+                            { "id": "140147fd0ad08f", "category": "default", "name": "resources", "value": "", "type": "string" },
+                            { "id": "140147fd0ad49d", "category": "default", "name": "default", "value": "", "type": "string" },
+                            { "id": "140147fd0ad505", "category": "default", "name": "ioSpecification", "value": "", "type": "string" },
+                            { "id": "140147fd0ad72f", "category": "default", "name": "dataInputAssociations", "value": "", "type": "string" },
+                            { "id": "140147fd0ad1a5", "category": "default", "name": "dataOutputAssociations", "value": "", "type": "string" }
+                        ],
+                        "shapeStyle": { "alpha": 1 },
+                        "id": "140147fd0ac696",
+                        "anchors": [{ "y": "0", "x": "w/2" }, { "y": "h", "x": "w/2" }, { "y": "h/2", "x": "0" }, { "y": "h/2", "x": "w" }],
+                        "category": "bpmn",
+                        "title": "Task",
+                        "name": "task",
+                        "fillStyle": { "color": "153,255,255", "type": "solid" },
+                        "path": [{
+                            "actions": [{ "action": "move", "y": "4", "x": "0" }, { "action": "quadraticCurve", "y1": "0", "y": "0", "x1": "0", "x": "4" }, { "action": "line", "y": "0", "x": "w-4" }, { "action": "quadraticCurve", "y1": "0", "y": "4", "x1": "w", "x": "w" }, { "action": "line", "y": "h-4", "x": "w" }, { "action": "quadraticCurve", "y1": "h", "y": "h", "x1": "w", "x": "w-4" }, { "action": "line", "y": "h", "x": "4" }, { "action": "quadraticCurve", "y1": "h", "y": "h-4", "x1": "0", "x": "0" }, { "action": "close" }]
+                        }],
+                        "locked": false,
+                        "group": "",
+                        "props": { "w": 100, "y": 132, "h": 70, "angle": 0, "x": 534, "zindex": 30 }
+                    },
+                    "1401480dc74a3a": {  //网关
+                        "groupName": "bpmnGateway",
+                        "textBlock": [{ "position": { "w": "120", "h": "30", "y": "h", "x": "w/2-60" }, "text": "" }],
+                        "lineStyle": { "lineColor": "50,50,50", "lineStyle": "solid", "lineWidth": 2 },
+                        "link": "",
+                        "children": [],
+                        "parent": "",
+                        "attribute": { "linkable": true, "visible": true, "container": false, "rotatable": true, "markerOffset": 5 },
+                        "fontStyle": { "orientation": "vertical", "bold": false, "vAlign": "middle", "color": "50,50,50", "underline": false, "textAlign": "center", "italic": false, "fontFamily": "Arial", "size": 13 },
+                        "resizeDir": ["tl", "tr", "br", "bl"],
+                        "dataAttributes": [
+                                { "id": "1401480dc757cd", "category": "default", "name": "Name", "value": "", "type": "string" },
+                                { "id": "1401480dc75fd", "category": "default", "name": "documentation", "value": "", "type": "string" },
+                                { "id": "1401480dc75327", "category": "default", "listItems": ["Unspecified,Converging,Diverging,Mixed"], "name": "gatewayDirection", "value": "", "type": "list" }
+                        ],
+                        "shapeStyle": { "alpha": 1 },
+                        "id": "1401480dc74a3a",
+                        "anchors": [
+                                { "y": "0", "x": "w/2" },
+                                { "y": "h", "x": "w/2" },
+                                { "y": "h/2", "x": "0" },
+                                { "y": "h/2", "x": "w" }
+                        ],
+                        "title": "Parallel Gateway",
+                        "category": "bpmn",
+                        "name": "parallelGateway",
+                        "path": [
+                            {
+                                "actions": [
+                                   { "action": "move", "y": "h*0.5", "x": "0" },
+                                   { "action": "line", "y": "0", "x": "w*0.5" },
+                                   { "action": "line", "y": "h*0.5", "x": "w" },
+                                   { "action": "line", "y": "h", "x": "w*0.5" },
+                                   { "action": "line", "y": "h*0.5", "x": "0" },
+                                   { "action": "close" }
+                                ]
+                            },
+                            {
+                                "lineStyle": { "lineStyle": "solid", "lineWidth": 0 },
+                                "fillStyle": { "color": "50,50,50", "type": "solid" },
+                                "actions": [
+                                    { "action": "move", "y": "h*0.5 - h*0.5*0.5", "x": "w*0.5 - Math.min(w,h)*0.04" },
+                                    { "action": "line", "y": "h*0.5 + h*0.5*0.5", "x": "w*0.5 - Math.min(w,h)*0.04" },
+                                    { "action": "line", "y": "h*0.5 + h*0.5*0.5", "x": "w*0.5 + Math.min(w,h)*0.04" },
+                                    { "action": "line", "y": "h*0.5 - h*0.5*0.5", "x": "w*0.5 + Math.min(w,h)*0.04" },
+                                    { "action": "line", "y": "h*0.5 - h*0.5*0.5", "x": "w*0.5 - Math.min(w,h)*0.04" },
+                                    { "action": "close" },
+                                    { "action": "move", "y": "h*0.5 - Math.min(w,h)*0.04", "x": "w*0.5 - w*0.5*0.5" },
+                                    { "action": "line", "y": "h*0.5 + Math.min(w,h)*0.04", "x": "w*0.5 - w*0.5*0.5" },
+                                    { "action": "line", "y": "h*0.5 + Math.min(w,h)*0.04", "x": "w*0.5 + w*0.5*0.5" },
+                                    { "action": "line", "y": "h*0.5 - Math.min(w,h)*0.04", "x": "w*0.5 + w*0.5*0.5" },
+                                    { "action": "line", "y": "h*0.5 - Math.min(w,h)*0.04", "x": "w*0.5 - w*0.5*0.5" },
+                                    { "action": "close" }
+                                ]
+                            },
+                            {
+                                "lineStyle": { "lineWidth": 0 },
+                                "fillStyle": { "type": "none" },
+                                "actions": [
+                                    { "action": "move", "y": "h*0.5", "x": "0" },
+                                    { "action": "line", "y": "0", "x": "w*0.5" },
+                                    { "action": "line", "y": "h*0.5", "x": "w" },
+                                    { "action": "line", "y": "h", "x": "w*0.5" },
+                                    { "action": "line", "y": "h*0.5", "x": "0" },
+                                    { "action": "close" }
+                                ]
+                            }
+                        ],
+                        "fillStyle": { "color": "255,255,51", "type": "solid" },
+                        "locked": false,
+                        "group": "",
+                        "props": { "w": 50, "angle": 0, "h": 50, "y": 230, "zindex": 34, "x": 688 }
+                    },
+                    "1401481c093a0d": { //结束事件
+                        "groupName": "endEvent",
+                        "textBlock": [{ "position": { "w": "120", "y": "h", "h": "30", "x": "w/2-60" }, "text": "" }],
+                        "lineStyle": { "lineColor": "50,50,50", "lineStyle": "solid", "lineWidth": 2 },
+                        "link": "",
+                        "children": [],
+                        "parent": "",
+                        "attribute": { "linkable": true, "visible": true, "container": false, "rotatable": true, "markerOffset": 5 },
+                        "fontStyle": { "orientation": "vertical", "bold": false, "color": "50,50,50", "vAlign": "middle", "underline": false, "textAlign": "center", "fontFamily": "Arial", "italic": false, "size": 13 },
+                        "resizeDir": ["tl", "tr", "br", "bl"],
+                        "dataAttributes": [{ "id": "1401481c093267", "category": "default", "name": "Name", "value": "", "type": "string" }, { "id": "1401481c09437e", "category": "default", "name": "documentation", "value": "", "type": "string" }],
+                        "shapeStyle": { "alpha": 1 },
+                        "id": "1401481c093a0d",
+                        "anchors": [{ "y": "0", "x": "w/2" }, { "y": "h", "x": "w/2" }, { "y": "h/2", "x": "0" }, { "y": "h/2", "x": "w" }],
+                        "category": "bpmn",
+                        "title": "End Event",
+                        "name": "endEvent",
+                        "fillStyle": { "color": "51,255,51", "type": "solid" },
+                        "path": [{ "lineStyle": { "lineStyle": "solid", "lineWidth": "lineWidth + 2" }, "actions": [{ "action": "move", "y": "h/2", "x": "0" }, { "action": "curve", "y1": "-h/6", "y2": "-h/6", "x2": "w", "y": "h/2", "x1": "0", "x": "w" }, { "action": "curve", "y1": "h+h/6", "y2": "h+h/6", "x2": "0", "y": "h/2", "x1": "w", "x": "0" }, { "action": "close" }] }],
+                        "locked": false,
+                        "group": "",
+                        "props": { "w": 40, "y": 235, "h": 40, "angle": 0, "x": 772, "zindex": 39 }
+                    },
+                    "14014821f574c": { //泳池
+                        "textBlock": [{ "position": { "w": 40, "y": 10, "h": "h-20", "x": 0 }, "text": "Participant A" }],
+                        "lineStyle": { "lineColor": "50,50,50", "lineStyle": "solid", "lineWidth": 2 },
+                        "link": "",
+                        "children": [],
+                        "parent": "",
+                        "attribute": { "linkable": false, "visible": true, "container": true, "rotatable": false, "markerOffset": 5 },
+                        "fontStyle": { "orientation": "horizontal", "bold": true, "color": "50,50,50", "vAlign": "middle", "underline": false, "textAlign": "center", "fontFamily": "Times New Roman", "italic": false, "size": 18 },
+                        "resizeDir": ["t", "r", "b"],
+                        "dataAttributes": [],
+                        "shapeStyle": { "alpha": 1 },
+                        "id": "14014821f574c",
+                        "anchors": [],
+                        "category": "lane",
+                        "title": "Horizontal Pool",
+                        "name": "horizontalPool",
+                        "fillStyle": { "color": "229,204,255", "type": "solid" },
+                        "path": [
+                            {
+                                "lineStyle": { "lineStyle": "solid" },
+                                "fillStyle": { "type": "none" },
+                                "actions": [
+                                    { "action": "move", "y": "0", "x": "0" },
+                                    { "action": "line", "y": "0", "x": "w" },
+                                    { "action": "line", "y": "h", "x": "w" },
+                                    { "action": "line", "y": "h", "x": "0" },
+                                    { "action": "close" }]
+                            },
+                            {
+                                "lineStyle": { "lineStyle": "solid" },
+                                "actions": [
+                                    { "action": "move", "y": 0, "x": 0 },
+                                    { "action": "line", "y": 0, "x": 40 },
+                                    { "action": "line", "y": "h", "x": 40 },
+                                    { "action": "line", "y": "h", "x": 0 },
+                                    { "action": "close" }]
+                            }],
+                        "locked": false,
+                        "group": "",
+                        "props": { "w": 752, "y": 97, "h": 318, "angle": 0, "x": 99, "zindex": 40 }
+                    }
+                }
+            };
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+body {
+    font-family: Arial;
+    padding: 0px;
+    margin: 0px;
+    background-image:url("images/canvas_bg.jpg");
+    -webkit-user-select: none;
+}
+
+#bpmn_wrapper {
+    width:100%;
+    height:642px;
+}
+
+#figure_panel {
+    width:200px;
+    height:100%;
+    background: linear-gradient(#F6F6F6, #DDDDDD); /* 标准的语法 */
+    border-right:solid 1px #A2A2A2;
+    float:left;
+}
+
+#drawing_wrapper{
+    float:left;
+}
+
+#drawing_toolbar{
+    width:100%;
+    height:40px;
+    background: linear-gradient(#F6F6F6, #DDDDDD); /* 标准的语法 */
+    border-bottom:solid 1px #A2A2A2;
+}
