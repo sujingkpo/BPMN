@@ -161,36 +161,6 @@ var Designer = {
                     if ($(this).hasClass("readonly")) {
                         return
                     }
-                    var q = $("#shape_thumb");
-                    q.children("div").html(l.title);
-                    var p = q.children("canvas")[0].getContext("2d");
-                    q.attr("current", l.name);
-                    var r = {
-                        x: 0,
-                        y: 0,
-                        w: l.props.w,
-                        h: l.props.h,
-                        angle: l.props.angle
-                    };
-                    var t = 160;
-                    var s = 160;
-                    p.clearRect(0, 0, t, s);
-                    if (l.props.w >= l.props.h) {
-                        if (l.props.w > t) {
-                            r.w = t;
-                            r.h = parseInt(l.props.h / l.props.w * r.w)
-                        }
-                    } else {
-                        if (l.props.h > s) {
-                            r.h = s;
-                            r.w = parseInt(l.props.w / l.props.h * r.h)
-                        }
-                    }
-                    q.children("canvas").attr({
-                        width: t + 20,
-                        height: r.h + 20
-                    });
-                    q.show();
                     l.props = r;
                     p.save();
                     p.lineJoin = "round";
@@ -203,22 +173,14 @@ var Designer = {
                     p.translate(-(r.w / 2), -(r.h / 2));
                     Designer.painter.renderShapePath(p, l, false,
                     function () {
-                        if ($("#shape_thumb[current=" + l.name + "]:visible").length > 0) {
-                            i.trigger("mouseenter")
-                        }
+                        //if ($("#shape_thumb[current=" + l.name + "]:visible").length > 0) {
+                        //    i.trigger("mouseenter")
+                        //}
                     });
                     Designer.painter.renderMarkers(p, l, false);
                     p.restore();
                     p.translate(w, v);
-                    var u = i.offset().top - $("#designer_header").outerHeight() + i.height() / 2 - q.outerHeight() / 2;
-                    if (u < 5) {
-                        u = 5
-                    } else {
-                        if (u + q.outerHeight() > $("#designer_viewport").height() - 5) {
-                            u = $("#designer_viewport").height() - 5 - q.outerHeight()
-                        }
-                    }
-                    q.css("top", u)
+                    
                 }).bind("mouseleave",
                 function () {
                     $("#shape_thumb").hide()

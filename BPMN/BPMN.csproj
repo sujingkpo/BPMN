@@ -66,6 +66,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2.html" />
+    <Content Include="bpmn\js\events\bpmn.clone.js" />
+    <Content Include="bpmn\js\events\bpmn.drag.js" />
+    <Content Include="bpmn\js\bpmn.figure.panel.js" />
+    <Content Include="bpmn\js\bpmn.figure.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -76,16 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1.html" />
-    <Content Include="bpmn\js\bpmn.js" />
+    <Content Include="bpmn\js\bpmn.load.js" />
     <Content Include="bpmn\js\events\bpmn.dragclone.js" />
     <Content Include="bpmn\js\events\bpmn.draggable.js" />
-    <Content Include="bpmn\js\figure\bpmn.circle.js" />
-    <Content Include="bpmn\js\figure\bpmn.diamond.js" />
-    <Content Include="bpmn\js\figure\bpmn.lane.js" />
-    <Content Include="bpmn\js\figure\bpmn.line.js" />
-    <Content Include="bpmn\js\figure\bpmn.rectangle.js" />
-    <Content Include="bpmn\js\jquery.min.js" />
-    <Content Include="bpmn\js\svg.min.js" />
+    <Content Include="bpmn\js\base\jquery.min.js" />
+    <Content Include="bpmn\js\base\svg.min.js" />
     <Content Include="bpmn\skins\default\bpmn.css" />
     <Content Include="bpmn\skins\default\images\bg.gif" />
     <Content Include="bpmn\skins\default\images\canvas_bg.jpg" />

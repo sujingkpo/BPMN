@@ -6,27 +6,21 @@
     <title>BPMN流程图在线编辑器(基于HTML5)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link type='text/css' rel='stylesheet' href='bpmn/skins/default/bpmn.css' />
-    <script type="text/javascript" src="bpmn/js/jquery.min.js"></script>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/svg.min.js"></script>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.js"></script>
-    <script type='text/javascript' charset='UTF-8' src=""></script>
-    <script>
-        $(function () {
-            //右侧画布区宽度自适应
-            var bpmn_wrapper_width = $("#bpmn_wrapper").width();
-            var figure_panel_width = $("#figure_panel").outerWidth();
-            var drawing_wrapper_width = bpmn_wrapper_width - figure_panel_width;
-            $("#drawing_wrapper").css("width", drawing_wrapper_width);
-        })
-    </script>
+    <script type="text/javascript" src="bpmn/js/base/jquery.min.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/base/svg.min.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.figure.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.figure.panel.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.load.js"></script>
 </head>
 <body>
-    <div id="bpmn_wrapper">
-        <div id="figure_panel"><!--图形面板--></div>
-        <div id="drawing_wrapper">
-            <div id="drawing_toolbar"><!--工具栏--></div>
-            <div id="canvas_wrapper">
-                <canvas id="canvas_area"><!--画布区域--></canvas>
+    <div id="bpmn_wrapper" class="bpmn_wrapper">
+        <div id="drawing_toolbar" class="drawing_toolbar"><!--工具栏--></div>
+        <div id="figure_panel" class="figure_panel">
+            <!--图形面板-->
+        </div>
+        <div id="drawing_wrapper" class="drawing_wrapper">
+            <div id="canvas_wrapper" class="canvas_wrapper">
+                <canvas id="canvas_area" class="canvas_area"><!--画布区域--></canvas>
             </div>
         </div>
     </div>
