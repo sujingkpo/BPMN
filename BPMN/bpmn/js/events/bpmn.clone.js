@@ -37,6 +37,8 @@
             config.CloneElement.style.left = currentX + "px";
             config.CloneElement.style.top = currentY + "px";
 
+            //当鼠标移动到画图区时，生成放大的图形
+
             ////限制可拖拽的有效区域
             //var figurePanel = document.getElementById("figure_panel");
             //var drawingWrapper = document.getElementById("drawing_wrapper");
@@ -67,6 +69,7 @@
                 var canvas = document.getElementById("clone_canvas");
                 var ctx = canvas.getContext("2d");
                 var _canvas = $(this).find("canvas");
+                var category = _canvas[0].getAttribute("category");
                 var offset;
                 if (_canvas.length > 0) {
                     ctx.drawImage(_canvas[0], 0, 0);//复制效果context.drawImage(img,x,y);
@@ -93,18 +96,22 @@
                         var figureWidth = _canvas[0].getAttribute("width");
                         var figureHeight = _canvas[0].getAttribute("height");
                         var divCanvasWrapper = document.createElement("div");
-                        //divCanvasWrapper.id = "";
+                        var rate = figureRateArray[canvasType];
+                        divCanvasWrapper.id = guid();
                         divCanvasWrapper.style.display = "block";
-                        divCanvasWrapper.style.left = (x * 1 - figureWidth * 1) + "px";
-                        divCanvasWrapper.style.top = (y * 1 - figureHeight * 1) + "px";
+                        divCanvasWrapper.style.left = (x * 1 - figureWidth * (rate - 1) / 2) + "px";
+                        divCanvasWrapper.style.top = (y * 1 - figureHeight * (rate - 1) / 2) + "px";
                         divCanvasWrapper.setAttribute("class", "figure_real");
 
                         var className = mapArray[canvasType];
-                        var obj = eval("new " + className + "({rate: 3,lineWidth:3})");
+                        var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:3})");
                         var canvasReal = obj.createCanvas();
                         divCanvasWrapper.appendChild(canvasReal);
-                        document.getElementById("canvas_wrapper").appendChild(divCanvasWrapper);
-                        $(divCanvasWrapper).drag();
+                        document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
+                        $(divCanvasWrapper).drag();//绑定拖拽属性
+                        $(divCanvasWrapper).scale();//绑定缩放属性
+                        selectedFigureArray.length = 0;
+                        selectedFigureArray.push(divCanvasWrapper.id);
                     }
                     ctx.clearRect(0, 0, _canvas[0].width, _canvas[0].height);
                     $("#clone_div").hide();

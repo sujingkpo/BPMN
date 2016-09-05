@@ -9,28 +9,27 @@ body {
     -webkit-user-select: none;
 }
 
-.bpmn_wrapper {
+#bpmn_wrapper {
     width: 100%;
-    height: 642px;
+    height: 640px;
 }
 
-.drawing_toolbar {
+#drawing_toolbar {
     width: 100%;
     height: 47px;
     background: #F6F6F6; /* 标准的语法 */
     border-bottom: solid 1px #CCCCCC;
 }
 
-.figure_panel {
+#figure_panel {
     width: 100%;
     height: 70px;
     background: #F6F6F6; /* 标准的语法 */
     border-bottom: solid 2px #E0E0E0;
 }
 
-.drawing_wrapper, .canvas_area {
+#drawing_wrapper, #canvas_area {
     width: 100%;
-    height: 100%;
 }
 
 .figure_box {
@@ -59,4 +58,79 @@ body {
 
 .figure_real {
     position: absolute;
+}
+
+#control_div {
+    border: solid 1px #000;
+    position: absolute;
+    left: 300px;
+    top: 300px;
+    width: 100px;
+    height: 100px;
+    /*display: none;*/
+}
+
+/*#control_canvas {
+    position: absolute;
+}*/
+
+.point_scale {
+    width: 6px;
+    height: 6px;
+    z-index: 4;
+    background-color: #fff;
+    border: solid 1px #000;
+    position: absolute;
+}
+
+.p_lt {
+    cursor: nw-resize;
+    left: -4px;
+    top: -4px;
+}
+
+.p_lb {
+    cursor: se-resize;
+    left: -4px;
+    top: 96px;
+}
+
+.p_rt {
+    cursor: ne-resize;
+    left: 96px;
+    top: -4px;
+}
+
+.p_rb {
+    cursor: sw-resize;
+    left: 96px;
+    top: 96px;
+}
+
+.point_circle {
+    width: 6px;
+    height: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 4;
+    background-color: #fff;
+    border: solid 1px #000;
+    position: absolute;
+}
+
+.p_l{
+    left:-4px;
+    top:46px;
+}
+.p_t{
+    left:46px;
+    top:-4px;
+}
+.p_r{
+    left:96px;
+    top:46px;
+}
+.p_b{
+    left:46px;
+    top:96px;
 }

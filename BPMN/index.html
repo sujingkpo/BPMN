@@ -8,12 +8,14 @@
     <link type='text/css' rel='stylesheet' href='bpmn/skins/default/bpmn.css' />
     <script type="text/javascript" src="bpmn/js/base/jquery.min.js"></script>
     <script type='text/javascript' charset='UTF-8' src="bpmn/js/base/svg.min.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/base/bpmn.func.js"></script>
     <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.global.js"></script>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.figure.base.js"></script>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.figure.js"></script>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.figure.panel.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/figure/bpmn.figure.base.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/figure/bpmn.figure.instance.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/figure/bpmn.figure.panel.js"></script>
     <script type='text/javascript' charset='UTF-8' src="bpmn/js/events/bpmn.drag.js"></script>
     <script type='text/javascript' charset='UTF-8' src="bpmn/js/events/bpmn.clone.js"></script>
+    <script type='text/javascript' charset='UTF-8' src="bpmn/js/events/bpmn.scale.js"></script>
     <!--<script type='text/javascript' charset='UTF-8' src="bpmn/js/bpmn.load.js"></script>-->
 </head>
 <body>
@@ -23,9 +25,7 @@
             <!--图形面板-->
         </div>
         <div id="drawing_wrapper" class="drawing_wrapper">
-            <div id="canvas_wrapper" class="canvas_wrapper">
-                <canvas id="canvas_area" class="canvas_area"><!--画布区域--></canvas>
-            </div>
+            <canvas id="canvas_area" class="canvas_area"><!--画布区域--></canvas>
         </div>
     </div>
     <script type="text/javascript">

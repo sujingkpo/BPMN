@@ -1,4 +1,5 @@
-﻿//任务
+﻿/**********************图形实例*********************/
+//任务
 var Task = function (opt) {
     var _options = $.extend({ text: "任务", type: "task" }, opt);
     $.extend(this.options, _options);
