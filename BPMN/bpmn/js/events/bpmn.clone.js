@@ -32,8 +32,26 @@
     //鼠标移动
     function MousMove(event) {
         if (config.CloneElement != null) {
-            config.CloneElement.style.left = parseInt(event.clientX - config.MouseX + config.X) + "px";
-            config.CloneElement.style.top = parseInt(event.clientY - config.MouseY + config.Y) + "px";
+            var currentX = parseInt(event.clientX - config.MouseX + config.X);
+            var currentY = parseInt(event.clientY - config.MouseY + config.Y);
+            config.CloneElement.style.left = currentX + "px";
+            config.CloneElement.style.top = currentY + "px";
+
+            ////限制可拖拽的有效区域
+            //var figurePanel = document.getElementById("figure_panel");
+            //var drawingWrapper = document.getElementById("drawing_wrapper");
+            //var minX = figurePanel.offsetLeft;
+            //var minY = figurePanel.offsetTop;
+            //var maxX = drawingWrapper.offsetWidth + minX;
+            //var maxY = drawingWrapper.offsetHeight + minY;
+
+            //var currentX = parseInt(event.clientX - config.MouseX + config.X);
+            //var currentY = parseInt(event.clientY - config.MouseY + config.Y);
+            //if (currentX > minX && currentX < maxX - document.getElementById("clone_canvas").offsetWidth)
+            //    config.CloneElement.style.left = currentX + "px";
+
+            //if (currentY > minY && currentY < maxY)
+            //    config.CloneElement.style.top = currentY + "px";
         }
     }
 

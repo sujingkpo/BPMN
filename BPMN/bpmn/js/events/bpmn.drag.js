@@ -1,5 +1,11 @@
 ﻿/******************************实现可拖拽插件*******************************/
 (function ($) {
+    var drawingWrapper = null;
+    var minX = 0;
+    var minY = 0;
+    var maxX = 0;
+    var maxY = 0;
+
     function drag(obj) {
         obj.onmousedown = function (e) {
             var oe = e || window.event;
@@ -14,8 +20,8 @@
                 if (ot < 0) ot = 0;
                 if (ot > document.documentElement.clientHeight - $this.offsetHeight) ot = document.documentElement.clientHeight - $this.offsetHeight;
                 if (ol > document.documentElement.clientWidth - $this.offsetWidth) ol = document.documentElement.clientWidth - $this.offsetWidth;
-                $this.style.left = ol + "px";
-                $this.style.top = ot + "px";
+                if (ol > minX && ol < maxX) $this.style.left = ol + "px";
+                if (ot > minY && ot < maxY)  $this.style.top = ot + "px";
             }
             document.onmouseup = function () {
                 document.onmousemove = null;
@@ -33,6 +39,11 @@
 
     //公开接口
     $.fn.drag = function (options) {
+        drawingWrapper = document.getElementById("drawing_wrapper");
+        minX = drawingWrapper.offsetLeft;
+        minY = drawingWrapper.offsetTop;
+        maxX = drawingWrapper.offsetWidth + minX - this[0].offsetWidth;
+        maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight;
         drag(this[0]);
     }
 

@@ -85,8 +85,6 @@
   <ItemGroup>
     <Content Include="1.html" />
     <Content Include="bpmn\js\bpmn.load.js" />
-    <Content Include="bpmn\js\events\bpmn.dragclone.js" />
-    <Content Include="bpmn\js\events\bpmn.draggable.js" />
     <Content Include="bpmn\js\base\jquery.min.js" />
     <Content Include="bpmn\js\base\svg.min.js" />
     <Content Include="bpmn\skins\default\bpmn.css" />
