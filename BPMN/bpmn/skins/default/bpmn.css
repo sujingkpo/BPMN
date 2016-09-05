@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 body {
-    font-size:9pt;
+    font-size: 9pt;
     font-family: Arial;
     padding: 0px;
     margin: 0px;
@@ -28,8 +28,9 @@ body {
     border-bottom: solid 2px #E0E0E0;
 }
 
-.drawing_wrapper {
+.drawing_wrapper, .canvas_area {
     width: 100%;
+    height: 100%;
 }
 
 .figure_box {
@@ -38,20 +39,24 @@ body {
     display: inline-block;
     border: 1px solid transparent;
     position: relative;
-    margin-left:10px;
-    margin-top:10px;
-    padding-left:5px;
-    cursor:default;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-left: 5px;
+    cursor: default;
 }
 
-.figure_box_over,.figure_box_down {
-    background-color:#D7E0F7;
+.figure_box_over, .figure_box_down {
+    background-color: #D7E0F7;
     /*cursor:move;*/
 }
 
 .figure_box span {
-    position:inherit;
-    top:-15px;
-    left:10px;
-    font-family:"微软雅黑";
+    position: inherit;
+    top: -15px;
+    left: 10px;
+    font-family: "微软雅黑";
+}
+
+.figure_real {
+    position: absolute;
 }

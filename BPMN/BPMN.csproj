@@ -67,10 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2.html" />
+    <Content Include="3.html" />
+    <Content Include="bpmn\js\bpmn.figure.js" />
     <Content Include="bpmn\js\events\bpmn.clone.js" />
     <Content Include="bpmn\js\events\bpmn.drag.js" />
     <Content Include="bpmn\js\bpmn.figure.panel.js" />
-    <Content Include="bpmn\js\bpmn.figure.js" />
+    <Content Include="bpmn\js\bpmn.figure.base.js" />
+    <Content Include="bpmn\js\bpmn.global.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
