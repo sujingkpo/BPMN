@@ -14,8 +14,8 @@ function InitFigurePanel() {
     $(cloneDiv).hide();
     var cloneCanvas = document.createElement("canvas");
     cloneCanvas.id = "clone_canvas";
-    cloneCanvas.setAttribute("width", 40);
-    cloneCanvas.setAttribute("height", 40);
+    cloneCanvas.setAttribute("width", 50);
+    cloneCanvas.setAttribute("height", 50);
     cloneCanvas.style.position = "absolute";
     cloneDiv.appendChild(cloneCanvas);
 

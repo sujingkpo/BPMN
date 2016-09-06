@@ -104,12 +104,12 @@
                         divCanvasWrapper.setAttribute("class", "figure_real");
 
                         var className = mapArray[canvasType];
-                        var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:3})");
+                        var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2})");
                         var canvasReal = obj.createCanvas();
                         divCanvasWrapper.appendChild(canvasReal);
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
                         $(divCanvasWrapper).drag();//绑定拖拽属性
-                        $(divCanvasWrapper).scale();//绑定缩放属性
+                        //$(divCanvasWrapper).drawline();//绑定画线属性
                         selectedFigureArray.length = 0;
                         selectedFigureArray.push(divCanvasWrapper.id);
                     }

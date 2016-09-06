@@ -22,3 +22,12 @@ function drawPath(context, x, y, n, r) {
     context.closePath();
     return context;
 }
+
+//获取鼠标在图形内的位置
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left * (canvas.width / rect.width),
+        y: evt.clientY - rect.top * (canvas.height / rect.height)
+    }
+}

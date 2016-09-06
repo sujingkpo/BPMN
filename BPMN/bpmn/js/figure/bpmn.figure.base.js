@@ -6,15 +6,12 @@ var Rectangle = function (options) {
         text: "矩形",
         category: "rectangle",
         type: "rectangle",
-        x: 1,
-        y: 6,
-        width: 40,
-        height: 40,
-        fillWidth: 38,
-        fillHeight: 28,
+        width: 50,
+        height: 50,
         rate: 1,
         bgcolor: "#3EB3E4",
-        lineWidth: 2
+        lineWidth: 1,
+        strokeStyle: "#000000"
     };
     this.options = $.extend(defaultOpt, options);
 }
@@ -25,14 +22,20 @@ Rectangle.prototype.createCanvas = function () {
     c.setAttribute("height", opt.height * opt.rate);
     c.setAttribute("name", opt.type);
     c.setAttribute("category", opt.category);
+    var x = 5, y = 5;
+    var fillWidth = opt.width * opt.rate - 2 * x;
+    var fillHeight = opt.height * opt.rate - 2 * y - 10 * opt.rate;
+    y = 5 + 5 * opt.rate;
     var ctx = c.getContext("2d");
+    ctx.rect(x, y, fillWidth, fillHeight);
     ctx.fillStyle = opt.bgcolor;
-    ctx.fillRect(opt.x * opt.rate, opt.y * opt.rate, opt.fillWidth * opt.rate, opt.fillHeight * opt.rate);
+    ctx.fillRect(x, y, fillWidth, fillHeight);
     if (opt.lineWidth > 0) {
         ctx.lineWidth = opt.lineWidth;
-        ctx.strokeStyle = "#000";
-        ctx.strokeRect(opt.x * opt.rate, opt.y * opt.rate, opt.fillWidth * opt.rate, opt.fillHeight * opt.rate);  //填充边框 x y坐标 宽 高
+        ctx.strokeStyle = opt.strokeStyle;
+        ctx.strokeRect(x, y, fillWidth, fillHeight);  //填充边框 x y坐标 宽 高
     }
+    ctx.stroke();
     return c;
 }
 
@@ -42,14 +45,12 @@ var Circle = function (options) {
         text: "圆形",
         category: "circle",
         type: "circle",
-        x: 20,
-        y: 20,
-        width: 40,
-        height: 40,
-        radius: 19,
+        width: 50,
+        height: 50,
         rate: 1,
         bgcolor: "#91F7CE",
-        lineWidth: 2
+        lineWidth: 2,
+        strokeStyle: "#000000"
     };
     this.options = $.extend(defaultOpt, options);
 }
@@ -60,16 +61,16 @@ Circle.prototype.createCanvas = function () {
     c.setAttribute("height", opt.height * opt.rate);
     c.setAttribute("name", opt.type);
     c.setAttribute("category", opt.category);
+    var radius = (opt.width * opt.rate - 10) / 2;
     var ctx = c.getContext("2d");
-    ctx.beginPath();
-    ctx.arc(opt.x * opt.rate, opt.y * opt.rate, opt.radius * opt.rate, 0, 2 * Math.PI, true);
+    ctx.arc(opt.width * opt.rate / 2, opt.height * opt.rate / 2, radius, 0, 2 * Math.PI, true);
     ctx.fillStyle = opt.bgcolor;
-    ctx.closePath();
     ctx.fill();
     if (opt.lineWidth > 0) {
         ctx.lineWidth = opt.lineWidth;
-        ctx.stroke();
+        ctx.strokeStyle = opt.strokeStyle;
     }
+    ctx.stroke();
     return c;
 }
 
@@ -79,14 +80,12 @@ var Diamond = function (options) {
         text: "菱形",
         category: "diamond",
         type: "diamond",
-        x: 20,
-        y: 20,
-        width: 40,
-        height: 40,
-        radius: 19,
+        width: 50,
+        height: 50,
         rate: 1,
         bgcolor: "#FFAA25",
-        lineWidth: 2
+        lineWidth: 2,
+        strokeStyle: "#000000"
     };
     this.options = $.extend(defaultOpt, options);
 }
@@ -97,14 +96,16 @@ Diamond.prototype.createCanvas = function () {
     c.setAttribute("height", opt.height * opt.rate);
     c.setAttribute("name", opt.type);
     c.setAttribute("category", opt.category);
+    var radius = (opt.width * opt.rate - 10) / 2;
     var ctx = c.getContext("2d");
-    ctx = drawPath(ctx, opt.x * opt.rate, opt.y * opt.rate, 4, opt.radius * opt.rate)
+    ctx = drawPath(ctx, opt.width * opt.rate / 2, opt.height * opt.rate / 2, 4, radius)
     ctx.fillStyle = opt.bgcolor;
     ctx.fill();
     if (opt.lineWidth > 0) {
         ctx.lineWidth = opt.lineWidth;
-        ctx.stroke();
+        ctx.strokeStyle = opt.strokeStyle;
     }
+    ctx.stroke();
     return c;
 }
 
@@ -117,12 +118,13 @@ var HorizonLane = function (options) {
         x: 1,
         y: 6,
         width: 40,
-        height: 40,
-        fillWidth: 38,
-        fillHeight: 28,
+        height: 30,
+        fillWidth: 40,
+        fillHeight: 30,
         rate: 1,
         bgcolor: "#3EB3E4",
-        lineWidth: 2
+        lineWidth: 1,
+        strokeStyle: "#000000"
     };
     this.options = $.extend(defaultOpt, options);
 }
@@ -139,8 +141,9 @@ HorizonLane.prototype.createCanvas = function () {
     ctx.fill();
     if (opt.lineWidth > 0) {
         ctx.lineWidth = opt.lineWidth;
-        ctx.stroke();
+        ctx.strokeStyle = opt.strokeStyle;
     }
+    ctx.stroke();
     return c;
 }
 
