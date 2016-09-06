@@ -94,42 +94,4 @@ $(function () {
             });
         }
     });
-
-    //鼠标在图形和离开图形时的效果
-    var $anchorDiv = $("#anchor_div");
-    $(".figure_real").find("canvas").live({
-        "mouseover": function (evt) {
-            $anchorDiv = $("#anchor_div");
-            $anchorDiv.show();
-            var x = this.offsetParent.offsetLeft + 4;
-            var y = this.offsetParent.offsetTop + 4;
-            var width = this.clientWidth - 10;
-            var height = this.clientHeight - 10;
-            //定位4个锚点
-            var posLeft = { x: -3, y: (height / 2) - 3 };
-            var posLRight = { x: width - 3, y: (height / 2) - 3 };
-            var posTop = { x: (width / 2) - 3, y: -3 };
-            var posBottom = { x: (width / 2) - 3, y: height - 3 };
-            $(p_l).css({ "left": posLeft.x + "px", "top": posLeft.y + "px" });
-            $(p_r).css({ "left": posLRight.x + "px", "top": posLRight.y + "px" });
-            $(p_t).css({ "left": posTop.x + "px", "top": posTop.y + "px" });
-            $(p_b).css({ "left": posBottom.x + "px", "top": posBottom.y + "px" });
-            $anchorDiv.css({ "left": x + "px", "top": y + "px" });
-        },
-        "mouseout": function (evt) {
-            //如果鼠标仍在canvas中，则没有变化
-            //获得canvas的范围，结合鼠标的坐标判断是否仍在画布内
-           // alert(this.offsetParent.offsetLeft);
-            //alert(evt.clientX);
-            var range = {
-                left: this.offsetParent.offsetLeft,
-                right: this.offsetParent.offsetLeft + this.offsetWidth,
-                top: this.offsetParent.offsetTop,
-                bottom: this.offsetParent.offsetTop + this.offsetHeight
-            };
-            if (evt.clientX < range.left || evt.clientX > range.right || evt.clientY < range.top || evt.clientY > range.bottom) {
-                $anchorDiv.hide();
-            }
-        }
-    });
 })

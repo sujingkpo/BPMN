@@ -36,24 +36,6 @@
             var currentY = parseInt(event.clientY - config.MouseY + config.Y);
             config.CloneElement.style.left = currentX + "px";
             config.CloneElement.style.top = currentY + "px";
-
-            //当鼠标移动到画图区时，生成放大的图形
-
-            ////限制可拖拽的有效区域
-            //var figurePanel = document.getElementById("figure_panel");
-            //var drawingWrapper = document.getElementById("drawing_wrapper");
-            //var minX = figurePanel.offsetLeft;
-            //var minY = figurePanel.offsetTop;
-            //var maxX = drawingWrapper.offsetWidth + minX;
-            //var maxY = drawingWrapper.offsetHeight + minY;
-
-            //var currentX = parseInt(event.clientX - config.MouseX + config.X);
-            //var currentY = parseInt(event.clientY - config.MouseY + config.Y);
-            //if (currentX > minX && currentX < maxX - document.getElementById("clone_canvas").offsetWidth)
-            //    config.CloneElement.style.left = currentX + "px";
-
-            //if (currentY > minY && currentY < maxY)
-            //    config.CloneElement.style.top = currentY + "px";
         }
     }
 
@@ -97,7 +79,7 @@
                         var figureHeight = _canvas[0].getAttribute("height");
                         var divCanvasWrapper = document.createElement("div");
                         var rate = figureRateArray[canvasType];
-                        divCanvasWrapper.id = guid();
+                        divCanvasWrapper.id = CommonMethod.guid();
                         divCanvasWrapper.style.display = "block";
                         divCanvasWrapper.style.left = (x * 1 - figureWidth * (rate - 1) / 2) + "px";
                         divCanvasWrapper.style.top = (y * 1 - figureHeight * (rate - 1) / 2) + "px";
@@ -109,7 +91,7 @@
                         divCanvasWrapper.appendChild(canvasReal);
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
                         $(divCanvasWrapper).drag();//绑定拖拽属性
-                        //$(divCanvasWrapper).drawline();//绑定画线属性
+                        $(divCanvasWrapper).drawline({ canvas: $(divCanvasWrapper).find("canvas")[0] });//绑定画线属性
                         selectedFigureArray.length = 0;
                         selectedFigureArray.push(divCanvasWrapper.id);
                     }

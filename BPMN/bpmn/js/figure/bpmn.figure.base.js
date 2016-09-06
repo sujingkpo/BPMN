@@ -98,7 +98,7 @@ Diamond.prototype.createCanvas = function () {
     c.setAttribute("category", opt.category);
     var radius = (opt.width * opt.rate - 10) / 2;
     var ctx = c.getContext("2d");
-    ctx = drawPath(ctx, opt.width * opt.rate / 2, opt.height * opt.rate / 2, 4, radius)
+    ctx = CommonMethod.drawPath(ctx, opt.width * opt.rate / 2, opt.height * opt.rate / 2, 4, radius)
     ctx.fillStyle = opt.bgcolor;
     ctx.fill();
     if (opt.lineWidth > 0) {
