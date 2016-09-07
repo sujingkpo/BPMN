@@ -26,3 +26,10 @@ var Gateway = function (opt) {
     $.extend(this.options, _options);
 }
 Gateway.prototype = new Diamond(this.options);//继承菱形
+
+//水平泳道图
+var HLane = function (opt) {
+    var _options = $.extend({ text: "泳池", type: "horizonlane" }, opt);
+    $.extend(this.options, _options);
+}
+HLane.prototype = new HorizonLane(this.options);//继承水平泳道

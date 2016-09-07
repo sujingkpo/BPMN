@@ -39,7 +39,7 @@ div{
 }
 
 .figure_box {
-    width: 120px;
+    width: 135px;
     height: 50px;
     border: 1px solid transparent;
     position: relative;
@@ -66,7 +66,7 @@ div{
     position: absolute;
     padding: 0px;
     margin: 0px;
-    z-index:2;
+    z-index:5;
     cursor: pointer;
 }
 

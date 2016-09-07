@@ -117,7 +117,8 @@ var Scale = {
         var scaleDiv = Scale.CreateScaleElement(id, posLT, posLB, posRT, posRB, x, y, height, width);
         selectedFigureArray.length = 0;//清空数组
         selectedFigureArray.push(id);//追加当前被选中元素ID
-        AnchorPoit.CreateAnchor(canvas, id);
+        if ($(canvas).attr("category") != "horizonlane")
+            AnchorPoit.CreateAnchor(canvas, id);
         return scaleDiv;
     },
     RemoveScale: function (event, canvas, id) {

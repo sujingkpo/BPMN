@@ -85,16 +85,23 @@
                         divCanvasWrapper.style.top = (y * 1 - figureHeight * (rate - 1) / 2) + "px";
                         divCanvasWrapper.setAttribute("class", "figure_real");
                         var className = mapArray[canvasType];
-                        var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2})");
+                        var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2,titleWidth: 40})");
                         var canvasReal = obj.createCanvas();
                         divCanvasWrapper.appendChild(canvasReal);
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
-                        //$(divCanvasWrapper).drag();//绑定拖拽属性
                         var c = $(divCanvasWrapper).find("canvas")[0];
-                        $(divCanvasWrapper).drawline({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
                         $(divCanvasWrapper).scale({ canvas: c, id: divCanvasWrapper.id });//绑定缩放属性
                         var scaleDiv = Scale.CreateScale(c, divCanvasWrapper.id);//创建缩放控制层
                         $(scaleDiv).drag();
+                        if (category != "horizonlane") {
+                            $(divCanvasWrapper).drawline({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
+                        }
+                        else
+                        {
+                            //将泳道图及其缩放层的z-index调小
+                            divCanvasWrapper.style.zIndex = 3;
+                            scaleDiv.style.zIndex = 4;
+                        }
                     }
                     ctx.clearRect(0, 0, _canvas[0].width, _canvas[0].height);
                     $("#clone_div").hide();

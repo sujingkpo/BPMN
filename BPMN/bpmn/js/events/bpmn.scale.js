@@ -12,21 +12,31 @@
             var canvas = options.canvas;
             var id = options.id;
             var drawingWrapper = document.getElementById("drawing_wrapper");
-            var minX = drawingWrapper.offsetLeft;
-            var minY = drawingWrapper.offsetTop;
-            var maxX = drawingWrapper.offsetWidth + minX - this[0].offsetWidth;
-            var maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight;
+            var minX = drawingWrapper.offsetLeft + 5;
+            var minY = drawingWrapper.offsetTop + 5;
+            var maxX = drawingWrapper.offsetWidth + minX - this[0].offsetWidth - 10;
+            var maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight - 10;
             $(this).bind("mousedown", function (e) {
+                var canvaswrapper = $("#" + id)[0];
                 var scaleDiv = Scale.CreateScale(canvas, id);
+                //如果是泳道图将其zindex调低
+                if ($(canvas).attr("category") == "horizonlane")
+                {
+                    canvaswrapper.style.zIndex = 3;
+                    scaleDiv.style.zIndex = 4;
+                }
                 $(scaleDiv).drag();
                 var oe = e || window.event;
                 var $this = scaleDiv;
                 var l = oe.clientX - $this.offsetLeft;
                 var t = oe.clientY - $this.offsetTop;
-                var canvaswrapper = $("#" + id)[0];
+                
                 var l_canvaswrapper = oe.clientX - canvaswrapper.offsetLeft;
                 var t_canvaswrapper = oe.clientY - canvaswrapper.offsetTop;
-                var anchor = $(".anchor_div[match='" + id + "']")[0];
+                var anchor = $this;
+                if ($(".anchor_div[match='" + id + "']").length > 0) {
+                    anchor = $(".anchor_div[match='" + id + "']")[0];
+                }
                 var l_anchor = oe.clientX - anchor.offsetLeft;
                 var t_anchor = oe.clientY - anchor.offsetTop;
                 document.onmousemove = function (e) {
@@ -54,7 +64,8 @@
                         canvaswrapper.style.left = ol_canvaswrapper + "px";
                         anchor.style.left = ol_anchor + "px";
                     }
-                    if (ot > minY && ot < maxY) {
+                    if(ot > minY && ot < maxY)
+                    {
                         $this.style.top = ot + "px";
                         canvaswrapper.style.top = ot_canvaswrapper + "px";
                         anchor.style.top = ot_anchor + "px";

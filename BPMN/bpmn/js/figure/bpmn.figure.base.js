@@ -29,11 +29,10 @@ Rectangle.prototype.createCanvas = function () {
     var ctx = c.getContext("2d");
     ctx.rect(x, y, fillWidth, fillHeight);
     ctx.fillStyle = opt.bgcolor;
-    ctx.fillRect(x, y, fillWidth, fillHeight);
+    ctx.fill();
     if (opt.lineWidth > 0) {
         ctx.lineWidth = opt.lineWidth;
         ctx.strokeStyle = opt.strokeStyle;
-        ctx.strokeRect(x, y, fillWidth, fillHeight);  //填充边框 x y坐标 宽 高
     }
     ctx.stroke();
     return c;
@@ -115,16 +114,13 @@ var HorizonLane = function (options) {
         text: "泳道",
         category: "horizonlane",
         type: "horizonlane",
-        x: 1,
-        y: 6,
-        width: 40,
-        height: 30,
-        fillWidth: 40,
-        fillHeight: 30,
+        width: 100,
+        height: 50,
         rate: 1,
-        bgcolor: "#3EB3E4",
-        lineWidth: 1,
-        strokeStyle: "#000000"
+        bgcolor: "goldenrod",
+        lineWidth: 2,
+        strokeStyle: "#323232",
+        titleWidth: 20
     };
     this.options = $.extend(defaultOpt, options);
 }
@@ -136,13 +132,17 @@ HorizonLane.prototype.createCanvas = function () {
     c.setAttribute("name", opt.type);
     c.setAttribute("category", opt.category);
     var ctx = c.getContext("2d");
-    ctx = drawPath(ctx, opt.x * opt.rate, opt.y * opt.rate, 4, opt.radius * opt.rate)
+    ctx.beginPath();
+    ctx.rect(5, 5, opt.titleWidth, opt.rate * opt.height - 10);
     ctx.fillStyle = opt.bgcolor;
     ctx.fill();
-    if (opt.lineWidth > 0) {
-        ctx.lineWidth = opt.lineWidth;
-        ctx.strokeStyle = opt.strokeStyle;
-    }
+    ctx.lineWidth = opt.lineWidth;
+    ctx.strokeStyle = opt.strokeStyle;
+    ctx.moveTo(opt.titleWidth + 5, 5);
+    ctx.lineTo(opt.rate * opt.width - 5, 5);
+    ctx.lineTo(opt.rate * opt.width - 5, opt.rate * opt.height - 5);
+    ctx.lineTo(opt.titleWidth + 5, opt.rate * opt.height - 5);
+    ctx.closePath();
     ctx.stroke();
     return c;
 }

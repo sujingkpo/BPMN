@@ -1,29 +1,25 @@
 ﻿<html>
 <script type="text/javascript" src="bpmn/js/base/jquery.min.js"></script>
-<body>
-    <div id="c1d54c95-672d-40aa-e0ce-9883bf450837" class="figure_real" style="display: block; left: 334px; top: 148px; position:absolute">
-        <canvas id='gameCanvas' width='100' height='100'> Canvas not supported </canvas>
-    </div>
-    <div id="control_div" style="display: block; left: 133px; top: 47px; width: 0px; height: 0px; position:absolute; border:solid 1px red">
-        aaa
+<body style="background-color:goldenrod">
+    <div id="c1d54c95-672d-40aa-e0ce-9883bf450837" class="figure_real" style="display: block; left: 334px; top: 300px; position:absolute">
+        <canvas id='gameCanvas' width='100' height='50'> Canvas not supported </canvas>
     </div>
 </body>
 </html>
 <script>
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
-    ctx.rect(0, 0, 100, 100);
+    ctx.beginPath();
+    ctx.rect(5, 5, 20, 40);
+    ctx.fillStyle = "red";
     ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#323232";
+    ctx.moveTo(25, 5);
+    ctx.lineTo(95, 5);
+    ctx.lineTo(95, 45);
+    ctx.lineTo(25, 45);
+    ctx.closePath();
     ctx.stroke();
 
-    canvas.onmouseover = function () {
-        alert(111111);
-        $("#control_div").show();
-        $("#control_div").css({ "left": "333px", "top": "147px" });
-    }
-
-    canvas.onmouseout = function () {
-        alert(222222);
-        $("#control_div").hide();
-    }
 </script>

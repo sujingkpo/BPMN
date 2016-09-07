@@ -4,6 +4,7 @@ mapArray["task"] = "Task";
 mapArray["startevent"] = "StartEvent";
 mapArray["endevent"] = "EndEvent";
 mapArray["gateway"] = "Gateway";
+mapArray["horizonlane"] = "HLane";
 
 //每个图形默认缩放的比例
 var figureRateArray = new Array();
@@ -11,6 +12,7 @@ figureRateArray["task"] = 2.5;
 figureRateArray["startevent"] = 1.5;
 figureRateArray["endevent"] = 1.5;
 figureRateArray["gateway"] = 1.5;
+figureRateArray["horizonlane"] = 3;
 
 //记录当前被选中的形状
 var selectedFigureArray = new Array();

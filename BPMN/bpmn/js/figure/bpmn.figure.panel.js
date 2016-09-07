@@ -14,7 +14,7 @@ function InitFigurePanel() {
     $(cloneDiv).hide();
     var cloneCanvas = document.createElement("canvas");
     cloneCanvas.id = "clone_canvas";
-    cloneCanvas.setAttribute("width", 50);
+    cloneCanvas.setAttribute("width", 100);
     cloneCanvas.setAttribute("height", 50);
     cloneCanvas.style.position = "absolute";
     cloneDiv.appendChild(cloneCanvas);
@@ -25,6 +25,7 @@ function InitFigurePanel() {
     figureArray.push(new StartEvent());//推入开始事件模型
     figureArray.push(new Gateway());//推入网关模型
     figureArray.push(new EndEvent());//推入结束事件模型
+    figureArray.push(new HLane());//推入泳道图模型
     
     var figure_panel = document.getElementsByClassName("figure_panel")[0];//形状面板
 

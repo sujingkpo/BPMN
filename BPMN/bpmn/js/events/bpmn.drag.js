@@ -10,8 +10,7 @@
         obj.onmousedown = function (e) {
             var oe = e || window.event;
             //如果是四个顶点，则拖拽失效
-            if (oe.target.getAttribute("class").indexOf("scale_div") == -1)
-            {
+            if (oe.target.getAttribute("class").indexOf("scale_div") == -1) {
                 return false;
             }
             var id = $(this).attr("match");
@@ -27,7 +26,10 @@
             if (!ctx.isPointInPath(l_canvaswrapper, t_canvaswrapper)) {
                 return false;
             }
-            var anchor = $(".anchor_div[match='" + id + "']")[0];
+            var anchor = $this;
+            if ($(".anchor_div[match='" + id + "']").length > 0) {
+                anchor = $(".anchor_div[match='" + id + "']")[0];
+            }
             var l_anchor = oe.clientX - anchor.offsetLeft;
             var t_anchor = oe.clientY - anchor.offsetTop;
             document.onmousemove = function (e) {
@@ -55,7 +57,8 @@
                     canvaswrapper.style.left = ol_canvaswrapper + "px";
                     anchor.style.left = ol_anchor + "px";
                 }
-                if (ot > minY && ot < maxY) {
+                if(ot > minY && ot < maxY)
+                {
                     $this.style.top = ot + "px";
                     canvaswrapper.style.top = ot_canvaswrapper + "px";
                     anchor.style.top = ot_anchor + "px";
@@ -94,10 +97,10 @@
     //公开接口
     $.fn.drag = function (options) {
         drawingWrapper = document.getElementById("drawing_wrapper");
-        minX = drawingWrapper.offsetLeft;
-        minY = drawingWrapper.offsetTop;
-        maxX = drawingWrapper.offsetWidth + minX - this[0].offsetWidth;
-        maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight;
+        minX = drawingWrapper.offsetLeft + 5;
+        minY = drawingWrapper.offsetTop + 5;
+        maxX = drawingWrapper.offsetWidth + minX - this[0].offsetWidth - 10;
+        maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight - 10;
         drag(this[0]);
     }
 
