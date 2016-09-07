@@ -22,10 +22,11 @@
             var t_canvaswrapper = oe.clientY - canvaswrapper.offsetTop;
             var canvas = $("#" + id).find("canvas")[0];
             var ctx = canvas.getContext("2d");
-            //判断鼠标是否在填充区内，拖拽失效
+            //判断鼠标是否在填充区内，屏蔽拖拽效果
             if (!ctx.isPointInPath(l_canvaswrapper, t_canvaswrapper)) {
                 return false;
             }
+            //如果是泳道图，将不会创建锚点层，这时候需要判断一下，否则会报错
             var anchor = $this;
             if ($(".anchor_div[match='" + id + "']").length > 0) {
                 anchor = $(".anchor_div[match='" + id + "']")[0];

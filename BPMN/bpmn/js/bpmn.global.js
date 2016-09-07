@@ -42,4 +42,21 @@ $(function () {
             });
         }
     });
+
+    //实时监听锚点事件
+    $(".point_anchor").live(
+        {
+            "mousedown": function (e) {
+
+            }
+        });
+
+    //实时监听缩放事件
+    $(".point_scale").live(
+        {
+            "mousedown": function (e) {
+                
+            }
+        });
+
 })
