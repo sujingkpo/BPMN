@@ -67,9 +67,10 @@ div{
     padding: 0px;
     margin: 0px;
     z-index:2;
+    cursor: pointer;
 }
 
-#control_div {
+.scale_div {
     border: solid 1px #000;
     position: absolute;
     left: 300px;
@@ -77,7 +78,8 @@ div{
     width: 100px;
     height: 100px;
     display: none;
-    z-index:99;
+    z-index:96;
+    cursor:move;
 }
 
 /*#control_canvas {
@@ -87,11 +89,10 @@ div{
 .point_scale {
     width: 6px;
     height: 6px;
-    z-index: 4;
+    z-index: 99;
     background-color: #fff;
     border: solid 1px #000;
     position: absolute;
-    display: none;
 }
 
 .p_lt {
@@ -101,7 +102,7 @@ div{
 }
 
 .p_lb {
-    cursor: se-resize;
+    cursor: sw-resize;
     left: -4px;
     top: 96px;
 }
@@ -113,13 +114,13 @@ div{
 }
 
 .p_rb {
-    cursor: sw-resize;
+    cursor: se-resize;
     left: 96px;
     top: 96px;
 }
 
 /**锚点**/
-#anchor_div {
+.anchor_div {
     border: none;
     position: absolute;
     left: 0px;
@@ -127,7 +128,7 @@ div{
     width: 0px;
     height: 0px;
     display: none;
-    z-index:99;
+    z-index:98;
 }
 
 .point_anchor {

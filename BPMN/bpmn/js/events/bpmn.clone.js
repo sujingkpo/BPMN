@@ -84,16 +84,17 @@
                         divCanvasWrapper.style.left = (x * 1 - figureWidth * (rate - 1) / 2) + "px";
                         divCanvasWrapper.style.top = (y * 1 - figureHeight * (rate - 1) / 2) + "px";
                         divCanvasWrapper.setAttribute("class", "figure_real");
-
                         var className = mapArray[canvasType];
                         var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2})");
                         var canvasReal = obj.createCanvas();
                         divCanvasWrapper.appendChild(canvasReal);
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
-                        $(divCanvasWrapper).drag();//绑定拖拽属性
-                        $(divCanvasWrapper).drawline({ canvas: $(divCanvasWrapper).find("canvas")[0] });//绑定画线属性
-                        selectedFigureArray.length = 0;
-                        selectedFigureArray.push(divCanvasWrapper.id);
+                        //$(divCanvasWrapper).drag();//绑定拖拽属性
+                        var c = $(divCanvasWrapper).find("canvas")[0];
+                        $(divCanvasWrapper).drawline({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
+                        $(divCanvasWrapper).scale({ canvas: c, id: divCanvasWrapper.id });//绑定缩放属性
+                        var scaleDiv = Scale.CreateScale(c, divCanvasWrapper.id);//创建缩放控制层
+                        $(scaleDiv).drag();
                     }
                     ctx.clearRect(0, 0, _canvas[0].width, _canvas[0].height);
                     $("#clone_div").hide();

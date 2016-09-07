@@ -12,19 +12,6 @@ figureRateArray["startevent"] = 1.5;
 figureRateArray["endevent"] = 1.5;
 figureRateArray["gateway"] = 1.5;
 
-//形状控制层和画布
-var controlDiv, controlCanvas;
-//控制缩放的4个端点控件
-var p_lt;//左上角的点
-var p_lb;//左下角
-var p_rt;//右上角
-var p_rb;//右下角
-//引出线条的4个点
-var p_l;
-var p_t;
-var p_b;
-var p_r;
-
 //记录当前被选中的形状
 var selectedFigureArray = new Array();
 
@@ -41,49 +28,6 @@ $(function () {
     $drawing_wrapper.css("height", drawing_wrapper_height);
     $("#canvas_area").css("height", drawing_wrapper_height);
 
-    //初始化形状控制层
-    controlDiv = document.createElement("div");
-    controlDiv.id = "control_div";
-    document.body.appendChild(controlDiv);
-    //controlCanvas = document.createElement("canvas");
-    //controlCanvas.id = "control_canvas";
-    //controlDiv.appendChild(controlCanvas);
-    //控制缩放的控件
-    p_lt = document.createElement("div");
-    p_lb = document.createElement("div");
-    p_rt = document.createElement("div");
-    p_rb = document.createElement("div");
-    //定义样式
-    p_lt.setAttribute("class", "point_scale p_lt");
-    p_lb.setAttribute("class", "point_scale p_lb");
-    p_rt.setAttribute("class", "point_scale p_rt");
-    p_rb.setAttribute("class", "point_scale p_rb");
-    //加载到页面
-    controlDiv.appendChild(p_lt);
-    controlDiv.appendChild(p_lb);
-    controlDiv.appendChild(p_rt);
-    controlDiv.appendChild(p_rb);
-
-    //初始化画线锚点层
-    anchorDiv = document.createElement("div");
-    anchorDiv.id = "anchor_div";
-    document.body.appendChild(anchorDiv);
-    //4个锚点
-    p_l = document.createElement("div");
-    p_t = document.createElement("div");
-    p_r = document.createElement("div");
-    p_b = document.createElement("div");
-    //定义样式
-    p_l.setAttribute("class", "point_anchor p_l");
-    p_t.setAttribute("class", "point_anchor p_t");
-    p_r.setAttribute("class", "point_anchor p_r");
-    p_b.setAttribute("class", "point_anchor p_b");
-    //加载到页面
-    anchorDiv.appendChild(p_l);
-    anchorDiv.appendChild(p_t);
-    anchorDiv.appendChild(p_r);
-    anchorDiv.appendChild(p_b);
-
     //Delete键删除选中图形
     $(document).keyup(function (event) {
         if (event.keyCode === 46) {
@@ -91,6 +35,8 @@ $(function () {
                 var id = selectedFigureArray.pop();
                 var el = document.getElementById(id);
                 el.parentNode.removeChild(el);
+                $(".scale_div[match='" + id + "']").remove();
+                $(".anchor_div[match='" + id + "']").remove();
             });
         }
     });
