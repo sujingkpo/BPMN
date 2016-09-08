@@ -79,7 +79,7 @@
                         var figureHeight = _canvas[0].getAttribute("height");
                         var divCanvasWrapper = document.createElement("div");
                         var rate = figureRateArray[canvasType];
-                        divCanvasWrapper.id = CommonMethod.guid();
+                        divCanvasWrapper.id = $.newId();
                         divCanvasWrapper.style.display = "block";
                         divCanvasWrapper.style.left = (x * 1 - figureWidth * (rate - 1) / 2) + "px";
                         divCanvasWrapper.style.top = (y * 1 - figureHeight * (rate - 1) / 2) + "px";
@@ -91,7 +91,7 @@
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
                         var c = $(divCanvasWrapper).find("canvas")[0];
                         $(divCanvasWrapper).scale({ canvas: c, id: divCanvasWrapper.id });//绑定缩放属性
-                        var scaleDiv = Scale.CreateScale(c, divCanvasWrapper.id);//创建缩放控制层
+                        var scaleDiv = $.createScale(c, divCanvasWrapper.id);//创建缩放控制层
                         $(scaleDiv).drag();
                         if (category != "horizonlane") {
                             $(divCanvasWrapper).drawline({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性

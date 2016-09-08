@@ -18,7 +18,7 @@
             var maxY = drawingWrapper.offsetHeight + minY - this[0].offsetHeight - 10;
             $(this).bind("mousedown", function (e) {
                 var canvaswrapper = $("#" + id)[0];
-                var scaleDiv = Scale.CreateScale(canvas, id);
+                var scaleDiv = $.createScale(canvas, id);
                 //如果是泳道图将其zindex调低
                 if ($(canvas).attr("category") == "horizonlane")
                 {
@@ -83,6 +83,65 @@
                 else oe.returnValue = false;
                 return false;
             });
+        }
+    });
+
+    $.extend({
+        //创建缩放层和控制点
+        createScale: function (canvas, id) {
+            var x = canvas.offsetParent.offsetLeft + 4;
+            var y = canvas.offsetParent.offsetTop + 4;
+            var width = canvas.clientWidth - 10;
+            var height = canvas.clientHeight - 10;
+
+            if ($(canvas).attr("category") == "rectangle") {
+                y = y + canvas.clientHeight / 10;
+                height = height - canvas.clientHeight / 5;
+            }
+            //定位4个顶点
+            var posLT = { x: -4, y: -4 };
+            var posLB = { x: -4, y: height - 4 };
+            var posRT = { x: width - 4, y: -4 };
+            var posRB = { x: width - 4, y: height - 4 };
+
+            $(".scale_div").remove();//删除缩放控制
+            $(".anchor_div").remove();//删除锚点控制
+            //初始化画线锚点层
+            var scaleDiv = document.createElement("div");
+            scaleDiv.setAttribute("class", "scale_div");
+            scaleDiv.setAttribute("match", id);
+            document.body.appendChild(scaleDiv);
+            //4个顶点
+            p_lt = document.createElement("div");
+            p_lb = document.createElement("div");
+            p_rt = document.createElement("div");
+            p_rb = document.createElement("div");
+            //定义样式
+            $(p_lt).attr({ "class": "point_scale p_lt", "position": "lt" });
+            $(p_lb).attr({ "class": "point_scale p_lb", "position": "lb" });
+            $(p_rt).attr({ "class": "point_scale p_rt", "position": "rt" });
+            $(p_rb).attr({ "class": "point_scale p_rb", "position": "rb" });
+            //加载到页面
+            scaleDiv.appendChild(p_lt);
+            scaleDiv.appendChild(p_lb);
+            scaleDiv.appendChild(p_rt);
+            scaleDiv.appendChild(p_rb);
+
+            $(p_lt).css({ "left": posLT.x + "px", "top": posLT.y + "px" });
+            $(p_lb).css({ "left": posLB.x + "px", "top": posLB.y + "px" });
+            $(p_rt).css({ "left": posRT.x + "px", "top": posRT.y + "px" });
+            $(p_rb).css({ "left": posRB.x + "px", "top": posRB.y + "px" });
+            $(scaleDiv).css({ "left": x + "px", "top": y + "px", "width": width + "px", "height": height + "px" });
+            $(scaleDiv).show();
+            selectedFigureArray.length = 0;//清空数组
+            selectedFigureArray.push(id);//追加当前被选中元素ID
+            if ($(canvas).attr("category") != "horizonlane")
+                $.createAnchor(canvas, id);
+            return scaleDiv;
+        },
+        //删除单个缩放层和控制点
+        removeScale: function (id) {
+            $(".scale_div[match='" + id + "']").remove();
         }
     });
 

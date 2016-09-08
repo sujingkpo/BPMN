@@ -12,7 +12,7 @@ figureRateArray["task"] = 2.5;
 figureRateArray["startevent"] = 1.5;
 figureRateArray["endevent"] = 1.5;
 figureRateArray["gateway"] = 1.5;
-figureRateArray["horizonlane"] = 3;
+figureRateArray["horizonlane"] = 5;
 
 //记录当前被选中的形状
 var selectedFigureArray = new Array();
@@ -55,8 +55,22 @@ $(function () {
     $(".point_scale").live(
         {
             "mousedown": function (e) {
-                
+                switch ($(this).attr("position"))
+                {
+                    case "lt":
+                        break;
+                    case "lb":
+                        break;
+                    case "rt":
+                        break;
+                    case "rb":
+                        break;
+                }
             }
         });
 
+    $("#bpmn_wrapper").bind("click", function (e) {
+        $(".anchor_div").remove();
+        $(".scale_div").remove();
+    });
 })
