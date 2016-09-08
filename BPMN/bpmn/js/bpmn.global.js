@@ -17,6 +17,9 @@ figureRateArray["horizonlane"] = 5;
 //记录当前被选中的形状
 var selectedFigureArray = new Array();
 
+//画线标记，避免重复创建画线层
+var flagForLine = false;
+
 $(function () {
     //画布区高度自适应
     var $bpmn_wrapper = $("#bpmn_wrapper");
@@ -44,20 +47,37 @@ $(function () {
     });
 
     //实时监听锚点事件
-    $(".point_anchor").live(
-        {
-            "mousedown": function (e) {
-
-            }
-        });
+    //$(".point_anchor").live(
+    //    {
+    //        "mousedown": function (e) {
+    //            flagForLine = true;
+    //            var x1 = e.clientX;
+    //            var y1 = e.clientY;
+    //            document.onmousemove = function (evt) {
+    //                var x2 = evt.clientX;
+    //                var y2 = evt.clientY;
+    //                if (!flagForLine) {
+    //                    $.createLineWrapper(x2, y2);
+    //                }
+    //                //$.drawLine(evt);
+    //            }
+    //        },
+    //        "mouseup": function (e) {
+    //            flagForLine = false;
+    //        }
+    //    });
 
     //实时监听缩放事件
     $(".point_scale").live(
         {
             "mousedown": function (e) {
-                switch ($(this).attr("position"))
-                {
+                var id = this.parentNode.getAttribute("match");
+                var category = $("#" + id).find("canvas")[0].getAttribute("name");
+                var className = mapArray[category];
+                switch ($(this).attr("position")) {
                     case "lt":
+                        //var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2,titleWidth: 40})");
+                        //var canvasReal = obj.createCanvas();
                         break;
                     case "lb":
                         break;

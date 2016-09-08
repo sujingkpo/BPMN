@@ -24,6 +24,7 @@
             var ctx = canvas.getContext("2d");
             //判断鼠标是否在填充区内，屏蔽拖拽效果
             if (!ctx.isPointInPath(l_canvaswrapper, t_canvaswrapper)) {
+                $.drawLine(e);//在非填充区可以引出线条
                 return false;
             }
             //如果是泳道图，将不会创建锚点层，这时候需要判断一下，否则会报错

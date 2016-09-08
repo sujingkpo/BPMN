@@ -142,6 +142,9 @@
         //删除单个缩放层和控制点
         removeScale: function (id) {
             $(".scale_div[match='" + id + "']").remove();
+        },
+        //缩放大小
+        resize: function () {
         }
     });
 

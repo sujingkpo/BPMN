@@ -94,7 +94,7 @@
                         var scaleDiv = $.createScale(c, divCanvasWrapper.id);//创建缩放控制层
                         $(scaleDiv).drag();
                         if (category != "horizonlane") {
-                            $(divCanvasWrapper).drawline({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
+                            $(divCanvasWrapper).flowLine({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
                         }
                         else
                         {

@@ -161,3 +161,9 @@ div{
     left: 46px;
     top: 96px;
 }
+
+.line_wrapper{
+    position:absolute;
+    border:solid 1px blue;
+    display:block;
+}
