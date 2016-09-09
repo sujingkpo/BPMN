@@ -73,26 +73,39 @@
             //绑定画线条方法
             $(".point_anchor").unbind().bind({
                 "mousedown": function (e) {
-                    flagForLine = true;
-                    var x1 = e.clientX;
-                    var y1 = e.clientY;
-                    this.onmousemove = function (evt) {
-                        var x2 = evt.clientX;
-                        var y2 = evt.clientY;
+                    //selectedFigureArray.length = 0;
+                    //var id = $(this).parent().attr("match");
+                    //var c = $(document.getElementById(id)).find("canvas")[0];
+                    //$.createScale(c, id);//创建缩放控制层
+                    var flagForLine = false;
+                    var pointLeft = this.parentNode.offsetLeft + this.offsetLeft;
+                    var pointTop = this.parentNode.offsetTop + this.offsetTop;
+                    var wrapperId = "";
+                    var wrapper, canvas, context;
+                    document.onmousemove = function (evt) {
+                        var mouseX = evt.clientX;
+                        var mouseY = evt.clientY;
                         if (!flagForLine) {
-                            $.createLineWrapper(x2, y2);
+                            flagForLine = true;
+                            //var from = $(this).parent().getAttribute("match");
+                            wrapperId = $.createLineWrapper(pointLeft, pointTop);
+                            wrapper = document.getElementById(wrapperId);
+                            canvas = document.getElementById("c" + wrapperId);
+                            context = canvas.getContext("2d");
+                            $(wrapper).show();
                         }
-                        //$.drawLine(evt);
+                        $.drawLine(wrapper, canvas, context, pointLeft, pointTop, mouseX, mouseY);
                     }
                 },
                 "mouseup": function (e) {
-                    flagForLine = false;
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    if (this.releaseCapture) this.releaseCapture();
                 }
             });
         },
         //删除单个锚点层
         removeAnchor: function (event, canvas, id) {
-            //如果鼠标仍在canvas中，则没有变化
             //获得canvas的范围，结合鼠标的坐标判断是否仍在画布内
             var range = {
                 left: parseInt(canvas.offsetParent.offsetLeft),
@@ -100,73 +113,96 @@
                 top: parseInt(canvas.offsetParent.offsetTop),
                 bottom: parseInt(canvas.offsetParent.offsetTop) + parseInt(canvas.offsetHeight)
             };
+            //关键:如果鼠标仍在canvas中，则没有变化，没有这个判断，鼠标移动到锚点上会闪动
             if (event.clientX <= range.left || event.clientX >= range.right || event.clientY <= range.top || event.clientY >= range.bottom) {
                 $(".anchor_div[match='" + id + "']").remove();
             }
         },
         //画线
-        drawLine: function (canvasId, x1, y1, x2, y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            var ctx = document.getElementById(canvasId).getContext("2d");
-            //样式
-            ctx.strokeStyle = "black";
-            ctx.fillStyle = "black";
-            ctx.lineWidth = 2;
-
-            //画线
-            ctx.beginPath();
-            ctx.moveTo(this.x1, this.y1);
-            ctx.lineTo(this.x2, this.y2);
-            ctx.stroke();
-
-            //画箭头
-            var radians = 0;
-            var x, y;
-            if (this.x1 > this.x2) {
-                x = this.x2 - 15;
-                y = this.y1;
-                radians = -90 * Math.PI / 180;
+        drawLine: function (wrapper, canvas, context, x1, y1, x2, y2) {
+            var w = Math.abs(x1 - x2);
+            var h = Math.abs(y1 - y2);
+            canvas.setAttribute("width", w + 100);
+            canvas.setAttribute("height", 10);
+            if (x1 > x2) {//从右向左
+                wrapper.style.left = parseInt(x2 + 0) + "px";
+                wrapper.style.top = parseInt(y1 - 2) + "px";
             }
-            else if (this.x1 < this.x2) {
-                x = this.x2 + 15;
-                y = this.y1;
-                radians = 90 * Math.PI / 180;
-            }
-            else if (this.y1 > this.y2) {
-                x = this.x1;
-                y = this.y2 - 15;
-                radians = 360 * Math.PI / 180;
-            }
-            else if (this.y1 < this.y2) {
-                x = this.x1;
-                y = this.y2 + 15;
-                radians = Math.PI;
-            }
-            this.drawArrow(ctx, x, y, radians);
-        },
-        drawArrow: function (ctx, x, y, radians) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.translate(x, y);
-            ctx.rotate(radians);
-            ctx.moveTo(0, 0);
-            ctx.lineTo(5, 15);
-            ctx.lineTo(-5, 15);
-            ctx.closePath();
-            ctx.restore();
-            ctx.fill();
+            //开始画线
+            var line = new Line(x1 - x2, 5, 15, 5);
+            line.drawLine(context);
         },
         createLineWrapper: function (x, y) {
             var wrapper = document.createElement("div");
             wrapper.id = $.newId();
             wrapper.setAttribute("class", "line_wrapper");
             var canvas = document.createElement("canvas");
+            canvas.id = "c" + wrapper.id;
             wrapper.appendChild(canvas);
             document.body.appendChild(wrapper);
+            wrapper.addEventListener(
+                "mouseup", function (evt) {
+                    document.onmousemove = null;
+                    document.onmousedown = null;
+                }, false);
+            return wrapper.id;
         }
     });
 
+    var Line = function (x1, y1, x2, y2) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
+    Line.prototype.drawLine = function (ctx, wrapper) {
+        //样式
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "black";
+        ctx.lineWidth = 2;
+
+        //画箭头
+        var radians = 0;
+        var x, y;
+        if (this.x1 > this.x2) {
+            x = this.x2 - 15;
+            y = this.y1;
+            radians = -90 * Math.PI / 180;
+        }
+        else if (this.x1 < this.x2) {
+            x = this.x2 + 15;
+            y = this.y1;
+            radians = 90 * Math.PI / 180;
+        }
+        else if (this.y1 > this.y2) {
+            x = this.x1;
+            y = this.y2 - 15;
+            radians = 360 * Math.PI / 180;
+        }
+        else if (this.y1 < this.y2) {
+            x = this.x1;
+            y = this.y2 + 15;
+            radians = Math.PI;
+        }
+        this.drawArrow(ctx, x, y, radians);
+
+        //画线
+        ctx.beginPath();
+        ctx.moveTo(this.x1, this.y1);
+        ctx.lineTo(this.x2, this.y2);
+        ctx.stroke();
+    }
+    Line.prototype.drawArrow = function (ctx, x, y, radians) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(x, y);
+        ctx.rotate(radians);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(5, 15);
+        ctx.lineTo(-5, 15);
+        ctx.closePath();
+        ctx.restore();
+        ctx.fill();
+    }
 })(jQuery)

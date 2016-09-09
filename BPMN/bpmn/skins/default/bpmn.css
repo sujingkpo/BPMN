@@ -164,6 +164,9 @@ div{
 
 .line_wrapper{
     position:absolute;
-    border:solid 1px blue;
-    display:block;
+    height:10px;
+    left:0px;
+    top:0px;
+    border:solid 0px blue;
+    display:none;
 }

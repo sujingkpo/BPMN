@@ -1,16 +1,79 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <script type='text/javascript' charset='UTF-8' src="bpmn/js/figure/bpmn.polygon.js"></script>
+
 </head>
 <body>
-    <canvas id="myCanvas" width='500' height='500'>Canvas画线技巧</canvas>
+    <!--<div id="a" style="width:300px;height:300px;border:solid 1px blue;left:0px; top:0px;position:absolute;">
+        <div style="width:100px;height:100px;border:solid 1px blue;left:50px; top:50px;position:absolute;"></div>
+    </div>-->
+    <div style="position:absolute;left:500px;top:300px;border:solid 1px blue;"><canvas id="canvas" width="120" height="10"><!--画布区域--></canvas></div>
     <script>
-        var canvas = document.getElementById('myCanvas');
-        context = canvas.getContext('2d');
-        var p = new Polygon(200, 200, 40, 4, 30, "#000000", "red", true);
-        p.createPath(context);
-        p.fill(context);
+        //document.getElementById("a").onmouseover = function () { }
+        //document.getElementById("a").onmouseout = function () { alert("离开") }
+
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+
+        function Line(x1, y1, x2, y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+
+        Line.prototype.drawLine = function (ctx) {
+            //样式
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+            ctx.lineWidth = 2;
+
+            //画线
+            ctx.beginPath();
+            ctx.moveTo(this.x1, this.y1);
+            ctx.lineTo(this.x2, this.y2);
+            ctx.stroke();
+
+            //画箭头
+            var radians = 0;
+            var x, y;
+            if (this.x1 > this.x2) {
+                x = this.x2 - 15;
+                y = this.y1;
+                radians = -90 * Math.PI / 180;
+            }
+            else if (this.x1 < this.x2) {
+                x = this.x2 + 15;
+                y = this.y1;
+                radians = 90 * Math.PI / 180;
+            }
+            else if (this.y1 > this.y2) {
+                x = this.x1;
+                y = this.y2 - 15;
+                radians = 360 * Math.PI / 180;
+            }
+            else if (this.y1 < this.y2) {
+                x = this.x1;
+                y = this.y2 + 15;
+                radians = Math.PI;
+            }
+            this.drawArrow(ctx, x, y, radians);
+        }
+        Line.prototype.drawArrow = function (ctx, x, y, radians) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(x, y);
+            ctx.rotate(radians);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(5, 15);
+            ctx.lineTo(-5, 15);
+            ctx.closePath();
+            ctx.restore();
+            ctx.fill();
+        }
+
+        var line = new Line(120, 5, 20, 5);
+         line.drawLine(context);
     </script>
 </body>
 </html>

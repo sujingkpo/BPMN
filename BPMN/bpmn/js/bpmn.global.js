@@ -92,5 +92,6 @@ $(function () {
     $("#bpmn_wrapper").bind("click", function (e) {
         $(".anchor_div").remove();
         $(".scale_div").remove();
+        selectedFigureArray.length = 0;
     });
 })
