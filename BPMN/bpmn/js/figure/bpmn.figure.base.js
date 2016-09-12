@@ -154,3 +154,64 @@ var VerticalLane = function (options) {
 VerticalLane.prototype.createCanvas = function () {
 
 }
+
+//流程线
+var Line = function (x1, y1, x2, y2) {
+    this.x1 = x1;
+    this.y1 = y1;
+    this.x2 = x2;
+    this.y2 = y2;
+}
+
+Line.prototype.drawLine = function (ctx) {
+    //样式
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
+    ctx.lineWidth = 2;
+
+    //画线
+    ctx.beginPath();
+    ctx.moveTo(this.x1, this.y1);
+    ctx.lineTo(this.x2, this.y2);
+    ctx.stroke();
+}
+Line.prototype.drawArrow = function (ctx) {
+    //样式
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
+    ctx.lineWidth = 2;
+
+    //画箭头
+    var radians = 0;
+    var x, y;
+    if (this.x1 > this.x2) {//从右向左
+        x = this.x2 - 15;
+        y = this.y1;
+        radians = -90 * Math.PI / 180;
+    }
+    else if (this.x1 < this.x2) {//从左向右
+        x = this.x2 + 15;
+        y = this.y1;
+        radians = 90 * Math.PI / 180;
+    }
+    else if (this.y1 > this.y2) {//从下向上
+        x = this.x1;
+        y = this.y2 - 15;
+        radians = 360 * Math.PI / 180;
+    }
+    else if (this.y1 < this.y2) {//从上向下
+        x = this.x1;
+        y = this.y2 + 15;
+        radians = Math.PI;
+    }
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.rotate(radians);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(5, 15);
+    ctx.lineTo(-5, 15);
+    ctx.closePath();
+    ctx.restore();
+    ctx.fill();
+}
