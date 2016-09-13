@@ -20,6 +20,12 @@ var selectedFigureArray = new Array();
 //画线标记，避免重复创建画线层
 var flagForLine = false;
 
+//流程线的外层DIV
+var linkWrapper = null;
+
+//流程线的Canvas元素
+var linkCanvas = null;
+
 $(function () {
     //画布区高度自适应
     var $bpmn_wrapper = $("#bpmn_wrapper");

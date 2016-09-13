@@ -76,8 +76,7 @@
                     var flagForLine = false;
                     var pointLeft = this.parentNode.offsetLeft + this.offsetLeft + 4;
                     var pointTop = this.parentNode.offsetTop + this.offsetTop + 4;
-                    var wrapperId = "";
-                    var wrapper, canvas, context;
+                    var wrapperId, context;
                     var anchorClass = this.getAttribute("class");
                     document.onmousemove = function (evt) {
                         var mouseX = evt.clientX;
@@ -86,15 +85,26 @@
                             flagForLine = true;
                             //var from = $(this).parent().getAttribute("match");
                             wrapperId = $.createLineWrapper(pointLeft, pointTop);
-                            wrapper = document.getElementById(wrapperId);
-                            canvas = document.getElementById("c" + wrapperId);
-                            context = canvas.getContext("2d");
-                            $(wrapper).show();
+                            linkWrapper = document.getElementById(wrapperId);
+                            linkCanvas = document.getElementById("c" + wrapperId);
+                            context = linkCanvas.getContext("2d");
+                            $(linkWrapper).show();
                         }
-                        $.drawLine(anchorClass, wrapper, canvas, context, pointLeft, pointTop, mouseX, mouseY);
+                        $.drawLine(anchorClass, linkWrapper, linkCanvas, context, pointLeft, pointTop, mouseX, mouseY);
+                    }
+                    document.onmouseup = function (evt) {
+                        if (((anchorClass.indexOf("p_l") > -1 || anchorClass.indexOf("p_r") > -1) && Math.abs(pointLeft - evt.clientX) < 10)
+                            || ((anchorClass.indexOf("p_t") > -1 || anchorClass.indexOf("p_b") > -1) && Math.abs(pointTop - evt.clientY) < 15)) {
+                            $(linkWrapper).remove();
+                            $(linkCanvas).remove();
+                        }
+                        document.onmousemove = null;
+                        document.onmouseup = null;
                     }
                 },
                 "mouseup": function (e) {
+                    $(linkWrapper).remove();
+                    $(linkCanvas).remove();
                     document.onmousemove = null;
                     document.onmouseup = null;
                     if (this.releaseCapture) this.releaseCapture();
@@ -129,7 +139,7 @@
                     canvas.setAttribute("width", w + 5);
                     canvas.setAttribute("height", 20);
                     if (h < 6) {//水平线
-                        var line = new Line(w + 5, 10, 20, 10);
+                        var line = new Line(w + 5, 10, 0, 10);
                         line.drawLine(context);
                         line.drawArrow(context);
                     }
@@ -147,7 +157,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(w / 2 + 5, h + 10, w / 2 + 5, 9);
                                 line2.drawLine(context);
-                                var line3 = new Line(w / 2 + 5, 10, 20, 10);
+                                var line3 = new Line(w / 2 + 5, 10, 0, 10);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -159,7 +169,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(w / 2 + 5, 5, w / 2 + 5, h + 6);
                                 line2.drawLine(context);
-                                var line3 = new Line(w / 2 + 5, h + 5, 20, h + 5);
+                                var line3 = new Line(w / 2 + 5, h + 5, 0, h + 5);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -175,7 +185,7 @@
 
                                 var line = new Line(w + 10, h + 5, 10, h + 5);
                                 line.drawLine(context);
-                                var line2 = new Line(10, h + 5, 10, 20);
+                                var line2 = new Line(10, h + 5, 10, 0);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
@@ -185,7 +195,7 @@
 
                                 var line = new Line(w + 10, 5, 10, 5);
                                 line.drawLine(context);
-                                var line2 = new Line(10, 5, 10, h - 10);
+                                var line2 = new Line(10, 5, 10, h + 5);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
@@ -202,7 +212,7 @@
                     canvas.setAttribute("width", w + 5);
                     canvas.setAttribute("height", 20);
                     if (Math.abs(y1 - y2) < 6) {//水平线
-                        var line = new Line(0, 10, w - 15, 10);
+                        var line = new Line(0, 10, w + 5, 10);
                         line.drawLine(context);
                         line.drawArrow(context);
                     }
@@ -220,7 +230,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(w / 2, h + 10, w / 2, 9);
                                 line2.drawLine(context);
-                                var line3 = new Line(w / 2, 10, w - 15, 10);
+                                var line3 = new Line(w / 2, 10, w + 5, 10);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -232,7 +242,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(w / 2, 5, w / 2, h + 6);
                                 line2.drawLine(context);
-                                var line3 = new Line(w / 2, h + 5, w - 15, h + 5);
+                                var line3 = new Line(w / 2, h + 5, w + 5, h + 5);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -248,7 +258,7 @@
 
                                 var line = new Line(0, h + 5, w, h + 5);
                                 line.drawLine(context);
-                                var line2 = new Line(w, h + 5, w, 20);
+                                var line2 = new Line(w, h + 5, w, 0);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
@@ -258,7 +268,7 @@
 
                                 var line = new Line(0, 5, w, 5);
                                 line.drawLine(context);
-                                var line2 = new Line(w, 5, w, h - 10);
+                                var line2 = new Line(w, 5, w, h + 5);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
@@ -275,7 +285,7 @@
                     canvas.setAttribute("width", 20);
                     canvas.setAttribute("height", h + 5);
                     if (w < 6) {//垂直线
-                        var line = new Line(10, h + 5, 10, 20);
+                        var line = new Line(10, h + 5, 10, 0);
                         line.drawLine(context);
                         line.drawArrow(context);
                     }
@@ -293,7 +303,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(w + 10, h / 2 + 5, 10, h / 2 + 5);
                                 line2.drawLine(context);
-                                var line3 = new Line(10, h / 2 + 5, 10, 20);
+                                var line3 = new Line(10, h / 2 + 5, 10, 0);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -305,7 +315,7 @@
                                 line.drawLine(context);
                                 var line2 = new Line(5, h / 2 + 5, w + 5, h / 2 + 5);
                                 line2.drawLine(context);
-                                var line3 = new Line(w + 5, h / 2 + 5, w + 5, 20);
+                                var line3 = new Line(w + 5, h / 2 + 5, w + 5, 0);
                                 line3.drawLine(context);
                                 line3.drawArrow(context);
                             }
@@ -315,23 +325,23 @@
                             canvas.setAttribute("height", h + 10);
                             wrapper.style.width = (w + 10) + "px";
                             wrapper.style.height = (h + 10) + "px";
-                            if (y1 > y2) {//箭头朝左
-                                wrapper.style.left = parseInt(x1) + "px";
-                                wrapper.style.top = parseInt(y2 - 5) + "px";
+                            if (x1 > x2) {//箭头朝左
+                                wrapper.style.left = parseInt(x2 - 5) + "px";
+                                wrapper.style.top = parseInt(y2 - 10) + "px";
 
-                                var line = new Line(0, (y1 - y2 + 5), x2 - x1, (y1 - y2 + 5));
+                                var line = new Line(w + 5, h + 10, w + 5, 10);
                                 line.drawLine(context);
-                                var line2 = new Line(x2 - x1, (y1 - y2 + 5), x2 - x1, 20);
+                                var line2 = new Line(w + 5, 10, 0, 10);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
                             else {//箭头朝右
-                                wrapper.style.left = parseInt(x1) + "px";
-                                wrapper.style.top = parseInt(y1 - 5) + "px";
+                                wrapper.style.left = parseInt(x1 - 5) + "px";
+                                wrapper.style.top = parseInt(y2 - 10) + "px";
 
-                                var line = new Line(0, 5, x2 - x1, 5);
+                                var line = new Line(5, h + 10, 5, 10);
                                 line.drawLine(context);
-                                var line2 = new Line(x2 - x1, 5, x2 - x1, (y2 - y1 - 10));
+                                var line2 = new Line(5, 10, w + 10, 10);
                                 line2.drawLine(context);
                                 line2.drawArrow(context);
                             }
@@ -340,7 +350,77 @@
                 }
             }
             else if (anchorClass.indexOf("p_b") > -1) {//从下锚点画线
+                if (y1 < y2) {
+                    wrapper.style.left = parseInt(x1 - 10) + "px";
+                    wrapper.style.top = parseInt(y1) + "px";
+                    wrapper.style.width = "20px";
+                    wrapper.style.height = (h + 5) + "px";
+                    canvas.setAttribute("width", 20);
+                    canvas.setAttribute("height", h + 5);
+                    if (w < 6) {//垂直线
+                        var line = new Line(10, 0, 10, h + 5);
+                        line.drawLine(context);
+                        line.drawArrow(context);
+                    }
+                    else {
+                        if (h > w) {//双折线
+                            canvas.setAttribute("width", w + 15);
+                            canvas.setAttribute("height", h + 5);
+                            wrapper.style.width = (w + 15) + "px";
+                            wrapper.style.height = (h + 5) + "px";
+                            if (x1 > x2) {//向左折
+                                wrapper.style.left = parseInt(x2 - 10) + "px";
+                                wrapper.style.top = parseInt(y1) + "px";
 
+                                var line = new Line(w + 10, 0, w + 10, h / 2);
+                                line.drawLine(context);
+                                var line2 = new Line(w + 10, h / 2, 10, h / 2);
+                                line2.drawLine(context);
+                                var line3 = new Line(10, h / 2, 10, h + 5);
+                                line3.drawLine(context);
+                                line3.drawArrow(context);
+                            }
+                            else {//向右折
+                                wrapper.style.left = parseInt(x1 - 5) + "px";
+                                wrapper.style.top = parseInt(y1) + "px";
+
+                                var line = new Line(5, 0, 5, h / 2);
+                                line.drawLine(context);
+                                var line2 = new Line(5, h / 2, w + 5, h / 2);
+                                line2.drawLine(context);
+                                var line3 = new Line(w + 5, h / 2, w + 5, h + 5);
+                                line3.drawLine(context);
+                                line3.drawArrow(context);
+                            }
+                        }
+                        else {//单折线
+                            canvas.setAttribute("width", w + 10);
+                            canvas.setAttribute("height", h + 10);
+                            wrapper.style.width = (w + 10) + "px";
+                            wrapper.style.height = (h + 10) + "px";
+                            if (x1 > x2) {//箭头朝左
+                                wrapper.style.left = parseInt(x2 - 5) + "px";
+                                wrapper.style.top = parseInt(y1) + "px";
+
+                                var line = new Line(w + 5, 0, w + 5, h);
+                                line.drawLine(context);
+                                var line2 = new Line(w + 5, h, 0, h);
+                                line2.drawLine(context);
+                                line2.drawArrow(context);
+                            }
+                            else {//箭头朝右
+                                wrapper.style.left = parseInt(x1 - 5) + "px";
+                                wrapper.style.top = parseInt(y1) + "px";
+
+                                var line = new Line(5, 0, 5, h);
+                                line.drawLine(context);
+                                var line2 = new Line(5, h, w + 10, h);
+                                line2.drawLine(context);
+                                line2.drawArrow(context);
+                            }
+                        }
+                    }
+                }
             }
         },
         createLineWrapper: function (x, y) {//创建线条的外层和画布

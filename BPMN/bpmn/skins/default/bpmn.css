@@ -169,4 +169,5 @@ div{
     top:0px;
     border:solid 0px blue;
     display:none;
+    z-index:10;
 }

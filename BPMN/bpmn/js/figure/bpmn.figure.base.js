@@ -180,29 +180,33 @@ Line.prototype.drawArrow = function (ctx) {
     ctx.strokeStyle = "black";
     ctx.fillStyle = "black";
     ctx.lineWidth = 2;
-
+    //$("#demo").html("x1:" + this.x1 + "<br>y1:" + this.y1 + "<br>x2:" + this.x2 + "<br>y2:" + this.y2);
     //画箭头
     var radians = 0;
     var x, y;
     if (this.x1 > this.x2) {//从右向左
-        x = this.x2 - 15;
+        x = this.x2 - 2;
         y = this.y1;
         radians = -90 * Math.PI / 180;
     }
     else if (this.x1 < this.x2) {//从左向右
-        x = this.x2 + 15;
+        x = this.x2 + 2;
         y = this.y1;
         radians = 90 * Math.PI / 180;
     }
     else if (this.y1 > this.y2) {//从下向上
         x = this.x1;
-        y = this.y2 - 15;
+        y = this.y2 - 2;
         radians = 360 * Math.PI / 180;
     }
     else if (this.y1 < this.y2) {//从上向下
         x = this.x1;
-        y = this.y2 + 15;
+        y = this.y2 + 2;
         radians = Math.PI;
+    }
+    else
+    {
+        return false;
     }
     ctx.save();
     ctx.beginPath();
