@@ -156,23 +156,24 @@ VerticalLane.prototype.createCanvas = function () {
 }
 
 //流程线
-var Line = function (x1, y1, x2, y2) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
+var Line = function (pathArray, strokeStyle) {
+    this.pathLength = pathArray.length;
+    this.pathArray = pathArray;
+    this.strokeStyle = strokeStyle == null ? "#000000" : strokeStyle;
 }
 
 Line.prototype.drawLine = function (ctx) {
     //样式
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = this.strokeStyle;
     ctx.fillStyle = "black";
     ctx.lineWidth = 2;
 
     //画线
     ctx.beginPath();
-    ctx.moveTo(this.x1, this.y1);
-    ctx.lineTo(this.x2, this.y2);
+    ctx.moveTo(this.pathArray[0].x, this.pathArray[0].y);
+    for (var i = 1; i < this.pathLength; i++) {
+        ctx.lineTo(this.pathArray[i].x, this.pathArray[i].y);
+    }
     ctx.stroke();
 }
 Line.prototype.drawArrow = function (ctx) {
@@ -180,32 +181,32 @@ Line.prototype.drawArrow = function (ctx) {
     ctx.strokeStyle = "black";
     ctx.fillStyle = "black";
     ctx.lineWidth = 2;
+    var length = this.pathLength;
     //$("#demo").html("x1:" + this.x1 + "<br>y1:" + this.y1 + "<br>x2:" + this.x2 + "<br>y2:" + this.y2);
     //画箭头
     var radians = 0;
     var x, y;
-    if (this.x1 > this.x2) {//从右向左
-        x = this.x2 - 2;
-        y = this.y1;
+    if (this.pathArray[length - 2].x > this.pathArray[length - 1].x) {//从右向左
+        x = this.pathArray[length - 1].x - 2;
+        y = this.pathArray[length - 2].y;
         radians = -90 * Math.PI / 180;
     }
-    else if (this.x1 < this.x2) {//从左向右
-        x = this.x2 + 2;
-        y = this.y1;
+    else if (this.pathArray[length - 2].x < this.pathArray[length - 1].x) {//从左向右
+        x = this.pathArray[length - 1].x + 2;
+        y = this.pathArray[length - 2].y;
         radians = 90 * Math.PI / 180;
     }
-    else if (this.y1 > this.y2) {//从下向上
-        x = this.x1;
-        y = this.y2 - 2;
+    else if (this.pathArray[length - 2].y > this.pathArray[length - 1].y) {//从下向上
+        x = this.pathArray[length - 2].x;
+        y = this.pathArray[length - 1].y - 2;
         radians = 360 * Math.PI / 180;
     }
-    else if (this.y1 < this.y2) {//从上向下
-        x = this.x1;
-        y = this.y2 + 2;
+    else if (this.pathArray[length - 2].y < this.pathArray[length - 1].y) {//从上向下
+        x = this.pathArray[length - 2].x;
+        y = this.pathArray[length - 1].y + 2;
         radians = Math.PI;
     }
-    else
-    {
+    else {
         return false;
     }
     ctx.save();
