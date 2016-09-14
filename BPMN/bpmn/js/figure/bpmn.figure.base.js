@@ -156,54 +156,51 @@ VerticalLane.prototype.createCanvas = function () {
 }
 
 //流程线
-var Line = function (pathArray, strokeStyle) {
+var Line = function (pathArray, wrapper, strokeStyle) {
     this.pathLength = pathArray.length;
     this.pathArray = pathArray;
-    this.strokeStyle = strokeStyle == null ? "#000000" : strokeStyle;
+    this.strokeStyle = strokeStyle == null ? "black" : strokeStyle;
+    $(wrapper).attr("pos", JSON.stringify(pathArray));//记录下线条的完整路径
 }
 
 Line.prototype.drawLine = function (ctx) {
+    ctx.clearRect(0,0,1000,1000);
     //样式
     ctx.strokeStyle = this.strokeStyle;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = this.strokeStyle;
     ctx.lineWidth = 2;
 
     //画线
-    ctx.beginPath();
     ctx.moveTo(this.pathArray[0].x, this.pathArray[0].y);
     for (var i = 1; i < this.pathLength; i++) {
         ctx.lineTo(this.pathArray[i].x, this.pathArray[i].y);
     }
     ctx.stroke();
+    this.drawArrow(ctx);
 }
 Line.prototype.drawArrow = function (ctx) {
-    //样式
-    ctx.strokeStyle = "black";
-    ctx.fillStyle = "black";
-    ctx.lineWidth = 2;
     var length = this.pathLength;
-    //$("#demo").html("x1:" + this.x1 + "<br>y1:" + this.y1 + "<br>x2:" + this.x2 + "<br>y2:" + this.y2);
     //画箭头
     var radians = 0;
     var x, y;
     if (this.pathArray[length - 2].x > this.pathArray[length - 1].x) {//从右向左
-        x = this.pathArray[length - 1].x - 2;
+        x = this.pathArray[length - 1].x;
         y = this.pathArray[length - 2].y;
         radians = -90 * Math.PI / 180;
     }
     else if (this.pathArray[length - 2].x < this.pathArray[length - 1].x) {//从左向右
-        x = this.pathArray[length - 1].x + 2;
+        x = this.pathArray[length - 1].x;
         y = this.pathArray[length - 2].y;
         radians = 90 * Math.PI / 180;
     }
     else if (this.pathArray[length - 2].y > this.pathArray[length - 1].y) {//从下向上
         x = this.pathArray[length - 2].x;
-        y = this.pathArray[length - 1].y - 2;
+        y = this.pathArray[length - 1].y;
         radians = 360 * Math.PI / 180;
     }
     else if (this.pathArray[length - 2].y < this.pathArray[length - 1].y) {//从上向下
         x = this.pathArray[length - 2].x;
-        y = this.pathArray[length - 1].y + 2;
+        y = this.pathArray[length - 1].y;
         radians = Math.PI;
     }
     else {

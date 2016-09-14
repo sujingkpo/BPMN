@@ -104,6 +104,12 @@
                                 $(linkWrapper).remove();
                                 $(linkCanvas).remove();
                             }
+                            else {
+                                var strpath = $(linkWrapper).attr("pos");
+                                var path = jQuery.parseJSON(strpath);
+                                var line = new Line(path, linkWrapper);
+                                line.drawLine(context);
+                            }
                         }
                         document.onmousemove = null;
                         document.onmouseup = null;
@@ -133,7 +139,7 @@
             }
         },
         //画线
-        drawLine: function (posAnchor, wrapper, canvas, context, x1, y1, x2, y2, strokeStyle) {
+        drawLine: function (posAnchor, wrapper, canvas, context, x1, y1, x2, y2) {
             var w = Math.abs(x1 - x2);
             var h = Math.abs(y1 - y2);
 
@@ -149,9 +155,8 @@
                         var path = new Array();
                         path.push({ x: w + 5, y: 10 });
                         path.push({ x: 0, y: 10 });
-                        var line = new Line(path, strokeStyle);
+                        var line = new Line(path, wrapper);
                         line.drawLine(context);
-                        line.drawArrow(context);
                     }
                     else {
                         if (w > h) {//双折线
@@ -167,9 +172,8 @@
                                 path.push({ x: w / 2 + 5, y: h + 10 });
                                 path.push({ x: w / 2 + 5, y: 10 });
                                 path.push({ x: 0, y: 10 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
-                                line.drawArrow(context);
                             }
                             else {//向下折
                                 wrapper.style.left = parseInt(x2 - 5) + "px";
@@ -179,9 +183,8 @@
                                 path.push({ x: w / 2 + 5, y: 5 });
                                 path.push({ x: w / 2 + 5, y: h + 5 });
                                 path.push({ x: 0, y: h + 5 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
-                                line.drawArrow(context);
                             }
                         }
                         else {//单折线
@@ -196,7 +199,7 @@
                                 path.push({ x: w + 10, y: h + 5 });
                                 path.push({ x: 10, y: h + 5 });
                                 path.push({ x: 10, y: 0 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -207,7 +210,7 @@
                                 path.push({ x: w + 10, y: 5 });
                                 path.push({ x: 10, y: 5 });
                                 path.push({ x: 10, y: h + 5 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -215,12 +218,12 @@
                     }
                 }
                 else {
-                    wrapper.style.left = parseInt(x1 - 30) + "px";
-                    wrapper.style.top = parseInt(y1 - 10) + "px";
-                    wrapper.style.width = (w + 5) + "px";
-                    wrapper.style.height = "20px";
-                    canvas.setAttribute("width", w + 5);
-                    canvas.setAttribute("height", 20);
+                    //wrapper.style.left = parseInt(x1 - 30) + "px";
+                    //wrapper.style.top = parseInt(y1 - 10) + "px";
+                    //wrapper.style.width = (w + 5) + "px";
+                    //wrapper.style.height = "20px";
+                    //canvas.setAttribute("width", w + 5);
+                    //canvas.setAttribute("height", 20);
                 }
             }
             else if (posAnchor == "right") {//从右锚点画线
@@ -235,7 +238,7 @@
                         var path = new Array();
                         path.push({ x: 0, y: 10 });
                         path.push({ x: w + 5, y: 10 });
-                        var line = new Line(path, strokeStyle);
+                        var line = new Line(path, wrapper);
                         line.drawLine(context);
                         line.drawArrow(context);
                     }
@@ -253,7 +256,7 @@
                                 path.push({ x: w / 2, y: h + 10 });
                                 path.push({ x: w / 2, y: 10 });
                                 path.push({ x: w + 5, y: 10 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -265,7 +268,7 @@
                                 path.push({ x: w / 2, y: 5 });
                                 path.push({ x: w / 2, y: h + 5 });
                                 path.push({ x: w + 5, y: h + 5 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -282,7 +285,7 @@
                                 path.push({ x: 0, y: h + 5 });
                                 path.push({ x: w, y: h + 5 });
                                 path.push({ x: w, y: 0 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -293,7 +296,7 @@
                                 path.push({ x: 0, y: 5 });
                                 path.push({ x: w, y: 5 });
                                 path.push({ x: w, y: h + 5 });
-                                var line = new Line(path, strokeStyle);
+                                var line = new Line(path, wrapper);
                                 line.drawLine(context);
                                 line.drawArrow(context);
                             }
@@ -313,7 +316,7 @@
                         var path = new Array();
                         path.push({ x: 10, y: h + 5 });
                         path.push({ x: 10, y: 0 });
-                        var line = new Line(path, strokeStyle);
+                        var line = new Line(path, wrapper);
                         line.drawLine(context);
                         line.drawArrow(context);
                     }
@@ -467,10 +470,28 @@
             wrapper.appendChild(canvas);
             var context = canvas.getContext("2d");
             document.body.appendChild(wrapper);
+            //判断鼠标是否在路径上
             wrapper.addEventListener(
-                "mouseover", function (evt) {
-                    if (context.isPointInPath(evt.clientX, evt.clientY)) {
-
+                "mousemove", function (evt) {
+                    var posX = evt.clientX - wrapper.offsetLeft;
+                    var posY = evt.clientY - wrapper.offsetTop;
+                    if (context.isPointInPath(posX, posY)) {
+                        wrapper.style.cursor = "pointer";
+                    }
+                    else {
+                        wrapper.style.cursor = "default";
+                    }
+                }, false);
+            wrapper.addEventListener(
+                "mousedown", function (evt) {
+                    var posX = evt.clientX - wrapper.offsetLeft;
+                    var posY = evt.clientY - wrapper.offsetTop;
+                    if (context.isPointInPath(posX, posY)) {
+                        var strpath = $(this).attr("pos");
+                        var path = jQuery.parseJSON(strpath);
+                        //selectedLineArray.push({ "id": wrapper.id, "context": context, "path": path });
+                        //var line = new Line(path, wrapper, "#940606");
+                        //line.drawLine(context);
                     }
                 }, false);
             wrapper.addEventListener(

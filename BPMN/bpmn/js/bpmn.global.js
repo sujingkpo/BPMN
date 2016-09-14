@@ -14,8 +14,14 @@ figureRateArray["endevent"] = 1.5;
 figureRateArray["gateway"] = 1.5;
 figureRateArray["horizonlane"] = 5;
 
+//是否按下来Ctrl键
+var CtrlKey = false;
+
 //记录当前被选中的形状
 var selectedFigureArray = new Array();
+
+//记录当前被选中的线条
+var selectedLineArray = new Array();
 
 //画线标记，避免重复创建画线层
 var flagForLine = false;
@@ -39,9 +45,15 @@ $(function () {
     $drawing_wrapper.css("height", drawing_wrapper_height);
     $("#canvas_area").css("height", drawing_wrapper_height);
 
+    //监听键盘按下事件
+    $(document).keydown(function (event) {
+        CtrlKey = event.ctrlKey;
+    });
+
     //Delete键删除选中图形
     $(document).keyup(function (event) {
         if (event.keyCode === 46) {
+            //删除选中的图形
             $(selectedFigureArray).each(function (i, n) {
                 var id = selectedFigureArray.pop();
                 var el = document.getElementById(id);
@@ -49,29 +61,16 @@ $(function () {
                 $(".scale_div[match='" + id + "']").remove();
                 $(".anchor_div[match='" + id + "']").remove();
             });
-        }
-    });
 
-    //实时监听锚点事件
-    //$(".point_anchor").live(
-    //    {
-    //        "mousedown": function (e) {
-    //            flagForLine = true;
-    //            var x1 = e.clientX;
-    //            var y1 = e.clientY;
-    //            document.onmousemove = function (evt) {
-    //                var x2 = evt.clientX;
-    //                var y2 = evt.clientY;
-    //                if (!flagForLine) {
-    //                    $.createLineWrapper(x2, y2);
-    //                }
-    //                //$.drawLine(evt);
-    //            }
-    //        },
-    //        "mouseup": function (e) {
-    //            flagForLine = false;
-    //        }
-    //    });
+            //删除选中的线条
+            $(selectedLineArray).each(function (i, n) {
+                var id = selectedLineArray.pop().id;
+                var el = document.getElementById(id);
+                el.parentNode.removeChild(el);
+            });
+        }
+        CtrlKey = event.ctrlKey;
+    });
 
     //实时监听缩放事件
     $(".point_scale").live(
@@ -95,9 +94,61 @@ $(function () {
             }
         });
 
-    $("#bpmn_wrapper").bind("click", function (e) {
+    //单选
+    var SelectSingleDom = function (evt, wrapperId) {
         $(".anchor_div").remove();
         $(".scale_div").remove();
         selectedFigureArray.length = 0;
+        var arrtmp = new Array();
+        $(selectedLineArray).each(function (i) {
+            var id = selectedLineArray[i].id;
+            var context = selectedLineArray[i].context;
+            var wrapper = document.getElementById(id);
+            if (wrapperId == id) {
+                var posX = evt.clientX - wrapper.offsetLeft;
+                var posY = evt.clientY - wrapper.offsetTop;
+                if (context.isPointInPath(posX, posY)) {
+                    arrtmp.push(selectedLineArray[i]);
+                    return true;
+                }
+            }
+            var path = selectedLineArray[i].path;
+            var line = new Line(path, wrapper);
+            line.drawLine(context);
+        });
+        selectedLineArray.length = 0;
+        selectedLineArray = arrtmp.slice(0);//复制数组
+        arrtmp.length = 0;
+    }
+
+    //多选
+    var SelectMultiDom = function (evt, wrapperId) {
+        $(".anchor_div").remove();
+        $(".scale_div").remove();
+        selectedFigureArray.length = 0;
+        var exist = false;
+        //遍历数组，查询待选择的线条是否已经是选中状态
+        $(selectedLineArray).each(function (i) {
+            var id = selectedLineArray[i].id;
+            if (wrapperId == id) {
+                exist = true;
+                return false;
+            }
+        });
+    }
+
+    $("#bpmn_wrapper").bind("click", function (e) {
+        SelectSingleDom(e);
+    });
+    $(".line_wrapper").live({
+        "click": function (e) {
+            if (CtrlKey) {
+                //按住ctrl多选
+                SelectMultiDom(e, this.id);
+            }
+            else {
+                SelectSingleDom(e, this.id);
+            }
+        }
     });
 })
