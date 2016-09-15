@@ -121,32 +121,12 @@ $(function () {
         arrtmp.length = 0;
     }
 
-    //多选
-    var SelectMultiDom = function (evt, wrapperId) {
-        $(".anchor_div").remove();
-        $(".scale_div").remove();
-        selectedFigureArray.length = 0;
-        var exist = false;
-        //遍历数组，查询待选择的线条是否已经是选中状态
-        $(selectedLineArray).each(function (i) {
-            var id = selectedLineArray[i].id;
-            if (wrapperId == id) {
-                exist = true;
-                return false;
-            }
-        });
-    }
-
     $("#bpmn_wrapper").bind("click", function (e) {
         SelectSingleDom(e);
     });
     $(".line_wrapper").live({
         "click": function (e) {
-            if (CtrlKey) {
-                //按住ctrl多选
-                SelectMultiDom(e, this.id);
-            }
-            else {
+            if (!CtrlKey) {
                 SelectSingleDom(e, this.id);
             }
         }
