@@ -184,22 +184,22 @@ Line.prototype.drawArrow = function (ctx) {
     var radians = 0;
     var x, y;
     if (this.pathArray[length - 2].x > this.pathArray[length - 1].x) {//从右向左
-        x = this.pathArray[length - 1].x;
-        y = this.pathArray[length - 2].y;
-        radians = -90 * Math.PI / 180;
+        x = 0;
+        y = this.pathArray[length - 1].y;
+        radians = -Math.PI / 2;
     }
     else if (this.pathArray[length - 2].x < this.pathArray[length - 1].x) {//从左向右
         x = this.pathArray[length - 1].x;
-        y = this.pathArray[length - 2].y;
-        radians = 90 * Math.PI / 180;
+        y = this.pathArray[length - 1].y;
+        radians = Math.PI / 2;
     }
     else if (this.pathArray[length - 2].y > this.pathArray[length - 1].y) {//从下向上
-        x = this.pathArray[length - 2].x;
-        y = this.pathArray[length - 1].y;
-        radians = 360 * Math.PI / 180;
+        x = this.pathArray[length - 1].x;
+        y = 0;
+        radians = 0;
     }
     else if (this.pathArray[length - 2].y < this.pathArray[length - 1].y) {//从上向下
-        x = this.pathArray[length - 2].x;
+        x = this.pathArray[length - 1].x;
         y = this.pathArray[length - 1].y;
         radians = Math.PI;
     }
@@ -207,13 +207,14 @@ Line.prototype.drawArrow = function (ctx) {
         return false;
     }
     ctx.save();
-    ctx.beginPath();
     ctx.translate(x, y);
     ctx.rotate(radians);
+    ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(5, 15);
     ctx.lineTo(-5, 15);
     ctx.closePath();
-    ctx.restore();
+    ctx.stroke();
     ctx.fill();
+    ctx.restore();
 }

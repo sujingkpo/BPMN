@@ -17,6 +17,9 @@ figureRateArray["horizonlane"] = 5;
 //是否按下来Ctrl键
 var CtrlKey = false;
 
+//线条被选中的颜色
+var selectedLineStyle = "#940606";
+
 //记录当前被选中的形状
 var selectedFigureArray = new Array();
 
@@ -26,10 +29,10 @@ var selectedLineArray = new Array();
 //画线标记，避免重复创建画线层
 var flagForLine = false;
 
-//流程线的外层DIV
+//当前流程线的外层DIV
 var linkWrapper = null;
 
-//流程线的Canvas元素
+//当前流程线的Canvas元素
 var linkCanvas = null;
 
 $(function () {
@@ -63,11 +66,11 @@ $(function () {
             });
 
             //删除选中的线条
-            $(selectedLineArray).each(function (i, n) {
-                var id = selectedLineArray.pop().id;
-                var el = document.getElementById(id);
+            for (var i in selectedLineArray) {
+                var el = document.getElementById(i);
                 el.parentNode.removeChild(el);
-            });
+                delete selectedLineArray[i];
+            }
         }
         CtrlKey = event.ctrlKey;
     });
@@ -95,39 +98,38 @@ $(function () {
         });
 
     //单选
-    var SelectSingleDom = function (evt, wrapperId) {
+    $.SelectSingleDom = function (evt, wrapperId) {
         $(".anchor_div").remove();
         $(".scale_div").remove();
         selectedFigureArray.length = 0;
+
         var arrtmp = new Array();
-        $(selectedLineArray).each(function (i) {
-            var id = selectedLineArray[i].id;
+        for (var i in selectedLineArray) {
+            var id = i;
             var context = selectedLineArray[i].context;
             var wrapper = document.getElementById(id);
             if (wrapperId == id) {
                 var posX = evt.clientX - wrapper.offsetLeft;
                 var posY = evt.clientY - wrapper.offsetTop;
                 if (context.isPointInPath(posX, posY)) {
-                    arrtmp.push(selectedLineArray[i]);
+                    arrtmp = selectedLineArray[i];
                     return true;
                 }
             }
             var path = selectedLineArray[i].path;
             var line = new Line(path, wrapper);
             line.drawLine(context);
-        });
-        selectedLineArray.length = 0;
-        selectedLineArray = arrtmp.slice(0);//复制数组
-        arrtmp.length = 0;
+            delete selectedLineArray[i];
+        }
     }
 
     $("#bpmn_wrapper").bind("click", function (e) {
-        SelectSingleDom(e);
+        $.SelectSingleDom(e);
     });
     $(".line_wrapper").live({
         "click": function (e) {
             if (!CtrlKey) {
-                SelectSingleDom(e, this.id);
+                $.SelectSingleDom(e, this.id);
             }
         }
     });
