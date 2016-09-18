@@ -38,6 +38,7 @@
             config.CloneElement.style.top = currentY + "px";
         }
     }
+    //初始化文字信息
     function tipInit(guid) {
         var showTip = "<div class='figure_real_tips' match='" + guid + "'></div>";
         var show = $(".figure_real_tips[match='" + guid + "']");

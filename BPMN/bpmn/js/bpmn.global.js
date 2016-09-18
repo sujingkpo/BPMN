@@ -96,6 +96,7 @@ $(function () {
                 }
             }
         });
+    //双击事件
     $(".scale_div").live("dblclick", function (e) {
         var guid = $(this).attr("match");
         var canvasDiv = $("#" + guid);
