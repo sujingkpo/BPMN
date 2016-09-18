@@ -2,24 +2,32 @@
 <script type="text/javascript" src="bpmn/js/base/jquery.min.js"></script>
 <body style="background-color:goldenrod">
     <div id="c1d54c95-672d-40aa-e0ce-9883bf450837" class="figure_real" style="display: block; left: 334px; top: 300px; position:absolute">
-        <canvas id='gameCanvas' width='100' height='50'> Canvas not supported </canvas>
+        <canvas id='gameCanvas' width='500' height='500' style="border:dashed 1px red"> Canvas not supported </canvas>
     </div>
 </body>
 </html>
 <script>
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
-    ctx.beginPath();
-    ctx.rect(5, 5, 20, 40);
-    ctx.fillStyle = "red";
-    ctx.fill();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "#323232";
-    ctx.moveTo(25, 5);
-    ctx.lineTo(95, 5);
-    ctx.lineTo(95, 45);
-    ctx.lineTo(25, 45);
+    ctx.save();
+    //ctx.clearRect(0, 500, 500);
+    
+    ctx.beginPath();
+    ctx.translate(10, 15);
+    ctx.rotate(-Math.PI / 2);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(5, 15);
+    ctx.lineTo(-5, 15);
     ctx.closePath();
+    ctx.fill();
     ctx.stroke();
+    ctx.restore();
 
+    //ctx.save();
+    //ctx.translate(10,0);
+    //ctx.rotate(0);
+    //ctx.fillStyle="yellow";
+    ////ctx.fillRect(0,0,250,100)
+    //ctx.restore();
 </script>
