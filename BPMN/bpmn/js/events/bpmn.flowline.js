@@ -109,6 +109,7 @@
                             else {
                                 linkWrapper.setAttribute("endx", evt.clientX);
                                 linkWrapper.setAttribute("endy", evt.clientY);
+                                linkWrapper.style.zIndex = 0;
                             }
                         }
                         document.onmousemove = null;
@@ -143,7 +144,7 @@
             var w = Math.abs(x1 - x2);
             var h = Math.abs(y1 - y2);
             if (posAnchor == "left") {//从左锚点画线
-                if (x1 >= x2) {
+                if (x1 > x2) {
                     if (h < 6) {//水平线
                         wrapper.style.left = parseInt(x2 - 5) + "px";
                         wrapper.style.top = parseInt(y1 - 10) + "px";
@@ -222,34 +223,29 @@
                     }
                 }
                 else {
-                    //如果x1<x2，说明是围绕起点的图形画线
-                    if (Math.abs(y1 - y2) > (figure.width / 2 + 20)) {
-                        wrapper.style.left = parseInt(x1 - 25) + "px";
-                        wrapper.style.width = (w + 30) + "px";
-                        wrapper.style.height = (h + 15) + "px";
-                        canvas.setAttribute("width", w + 30);
-                        canvas.setAttribute("height", h + 15);
-                        var path = new Array();
-                        if (y1 > y2) {
-                            wrapper.style.top = (y2 - 10) + "px";
-                            path.push({ x: 25, y: h + 10 });
-                            path.push({ x: 5, y: h + 10 });
-                            path.push({ x: 5, y: 10 });
-                            path.push({ x: w + 30, y: 10 });
-                        }
-                        else {
-                            wrapper.style.top = (y1 - 10) + "px";
-                            path.push({ x: 25, y: 5 });
-                            path.push({ x: 5, y: 5 });
-                            path.push({ x: 0, y: h });
-                            path.push({ x: w + 20, y: h });
-                        }
-                        var line = new Line(path, wrapper, strokeStyle);
-                        line.drawLine(context);
+                    //围绕起点图形l进行画线
+                    wrapper.style.left = parseInt(x1 - 25) + "px";
+                    wrapper.style.width = (w + 30) + "px";
+                    wrapper.style.height = (h + 15) + "px";
+                    canvas.setAttribute("width", w + 30);
+                    canvas.setAttribute("height", h + 15);
+                    var path = new Array();
+                    if (y1 > y2) {
+                        wrapper.style.top = (y2 - 10) + "px";
+                        path.push({ x: 25, y: h + 10 });
+                        path.push({ x: 5, y: h + 10 });
+                        path.push({ x: 5, y: 10 });
+                        path.push({ x: w + 30, y: 10 });
                     }
                     else {
-
+                        wrapper.style.top = (y1 - 5) + "px";
+                        path.push({ x: 25, y: 5 });
+                        path.push({ x: 5, y: 5 });
+                        path.push({ x: 5, y: h + 5 });
+                        path.push({ x: w + 30, y: h + 5 });
                     }
+                    var line = new Line(path, wrapper, strokeStyle);
+                    line.drawLine(context);
                 }
             }
             else if (posAnchor == "right") {//从右锚点画线
@@ -324,6 +320,31 @@
                         }
                     }
                 }
+                else {
+                    //围绕起点图形l进行画线
+                    wrapper.style.left = parseInt(x2 - 5) + "px";
+                    wrapper.style.width = (w + 30) + "px";
+                    wrapper.style.height = (h + 15) + "px";
+                    canvas.setAttribute("width", w + 30);
+                    canvas.setAttribute("height", h + 15);
+                    var path = new Array();
+                    if (y1 > y2) {
+                        wrapper.style.top = (y2 - 10) + "px";
+                        path.push({ x: w + 5, y: h + 10 });
+                        path.push({ x: w + 25, y: h + 10 });
+                        path.push({ x: w + 25, y: 10 });
+                        path.push({ x: 0, y: 10 });
+                    }
+                    else {
+                        wrapper.style.top = (y1 - 5) + "px";
+                        path.push({ x: w + 5, y: 5 });
+                        path.push({ x: w + 25, y: 5 });
+                        path.push({ x: w + 25, y: h + 5 });
+                        path.push({ x: 0, y: h + 5 });
+                    }
+                    var line = new Line(path, wrapper, strokeStyle);
+                    line.drawLine(context);
+                }
             }
             else if (posAnchor == "top") {//从顶部锚点画线
                 if (y1 > y2) {
@@ -396,6 +417,31 @@
                             }
                         }
                     }
+                }
+                else {
+                    //围绕起点图形l进行画线
+                    wrapper.style.top = (y1 - 25) + "px";
+                    wrapper.style.width = (w + 15) + "px";
+                    wrapper.style.height = (h + 30) + "px";
+                    canvas.setAttribute("width", w + 15);
+                    canvas.setAttribute("height", h + 30);
+                    var path = new Array();
+                    if (x1 > x2) {
+                        wrapper.style.left = parseInt(x2 - 10) + "px";
+                        path.push({ x: w + 10, y: 25 });
+                        path.push({ x: w + 10, y: 5 });
+                        path.push({ x: 10, y: 5 });
+                        path.push({ x: 10, y: h + 30 });
+                    }
+                    else {
+                        wrapper.style.left = (x1 - 5) + "px";
+                        path.push({ x: 5, y: 25 });
+                        path.push({ x: 5, y: 5 });
+                        path.push({ x: w + 5, y: 5 });
+                        path.push({ x: w + 5, y: h + 30 });
+                    }
+                    var line = new Line(path, wrapper, strokeStyle);
+                    line.drawLine(context);
                 }
             }
             else if (posAnchor == "bottom") {//从下锚点画线
@@ -470,6 +516,31 @@
                         }
                     }
                 }
+                else {
+                    //围绕起点图形l进行画线
+                    wrapper.style.top = (y2 - 5) + "px";
+                    wrapper.style.width = (w + 15) + "px";
+                    wrapper.style.height = (h + 35) + "px";
+                    canvas.setAttribute("width", w + 15);
+                    canvas.setAttribute("height", h + 35);
+                    var path = new Array();
+                    if (x1 > x2) {
+                        wrapper.style.left = parseInt(x2 - 10) + "px";
+                        path.push({ x: w + 10, y: h + 5 });
+                        path.push({ x: w + 10, y: h + 25 });
+                        path.push({ x: 10, y: h + 25 });
+                        path.push({ x: 10, y: 5 });
+                    }
+                    else {
+                        wrapper.style.left = (x1 - 5) + "px";
+                        path.push({ x: 5, y: h+5 });
+                        path.push({ x: 5, y: h+25 });
+                        path.push({ x: w + 5, y: h+25 });
+                        path.push({ x: w + 5, y: 0 });
+                    }
+                    var line = new Line(path, wrapper, strokeStyle);
+                    line.drawLine(context);
+                }
             }
         },
         createLineWrapper: function (x, y, f, a) {//创建线条的外层和画布
@@ -498,6 +569,7 @@
                 }, false);
             wrapper.addEventListener(
                 "mousedown", function (evt) {
+                    wrapper.style.zIndex = 10;
                     var posX = evt.clientX - wrapper.offsetLeft;
                     var posY = evt.clientY - wrapper.offsetTop;
                     var wrapperId = wrapper.id;
@@ -536,6 +608,7 @@
                                 wrapper.setAttribute("endx", e.clientX + spaceX);
                                 wrapper.setAttribute("endy", e.clientY + spaceY);
                             }
+                            wrapper.style.zIndex = 0;
                             document.onmousemove = null;
                             document.onmouseup = null;
                         }
