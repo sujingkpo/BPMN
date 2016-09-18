@@ -9,8 +9,8 @@ $.extend({
     },
     //画正多边形方法
     drawPath: function (context, x, y, n, r) {
-        var i, ang;
-        ang = Math.PI * 2 / n //旋转的角度
+        var i;
+        var ang = Math.PI * 2 / n; //旋转的角度
         context.lineWidth = 1;//设置线宽
         context.translate(x, y);//原点移到x,y处，即要画的多边形中心
         context.moveTo(0, -r);//据中心r距离处画点

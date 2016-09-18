@@ -94,7 +94,41 @@ $(function () {
                 }
             }
         });
+    $(".scale_div").live("dblclick", function (e) {
+        var guid = $(this).attr("match");
+        var canvasDiv = $("#" + guid);
+        var options = canvasDiv.attr("data-attribute");
+        var show = $(".figure_real_tips[match='" + guid + "']");
+        show.css("display", "none");
+        var editTip = "<div class='scale_div_Edit_tips' match='" + guid + "'><input type='text' value=''></div>";
+        var tip = $(".scale_div_Edit_tips[match='" + guid + "']");
+        if (tip === undefined || tip === null||tip.length===0) {
+            $(this).append(editTip);
+            tip = $(".scale_div_Edit_tips[match='" + guid + "']");
+        }
+        var texttip = $(tip + "input[type='text']");
+        tip.css("width", $(this).width()).css("height", "30px").css("left", "0").css("bottom", "-30px");
+        texttip.css("width", $(this).width()-3).css("height","30px").css("line-height","30px");
+        options = $.parseJSON(options);
+        texttip.focus(function() { this.select(); }).select();
+        texttip.blur(function () {
+            options.text = $(this).val();
+            canvasDiv.attr("data-attribute", JSON.stringify(options));
+            show.text(options.text);
+            show.css("display", "");
+        });
+        texttip.live("keypress", keyDownTipChange);
+        texttip.val(options.text);
+        
+    });
 
+    function keyDownTipChange(e) {
+        var keycode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        if (keycode === 13) {
+            this.blur();
+            $("#bpmn_wrapper").click();
+        }
+    }
     $("#bpmn_wrapper").bind("click", function (e) {
         $(".anchor_div").remove();
         $(".scale_div").remove();

@@ -171,3 +171,21 @@ div{
     display:none;
     z-index:10;
 }
+
+.figure_real_tips {
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    -moz-word-break: break-word;
+    -o-word-break: break-word;
+    word-break: break-word;
+    font-size: 12px;
+}
+
+.scale_div_Edit_tips {
+    position: absolute;
+}
+.scale_div_Edit_tips input[type="text"] {
+    text-align: center;
+    font-size: 12px;
+}

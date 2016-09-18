@@ -38,7 +38,19 @@
             config.CloneElement.style.top = currentY + "px";
         }
     }
-
+    function tipInit(guid) {
+        var showTip = "<div class='figure_real_tips' match='" + guid + "'></div>";
+        var show = $(".figure_real_tips[match='" + guid + "']");
+        var obj = $("#" + guid);
+        if (show === undefined || show === null || show.length === 0) {
+            obj.append(showTip);
+            show = $(".figure_real_tips[match='" + guid + "']");
+        }
+        var options = obj.attr("data-attribute");
+        options = $.parseJSON(options);
+        show.text(options.text);
+        show.css("width", obj.width());
+    }
     function clone() {
         $(".figure_box").live({
             "mousedown": function (event) {
@@ -86,9 +98,11 @@
                         divCanvasWrapper.setAttribute("class", "figure_real");
                         var className = mapArray[canvasType];
                         var obj = eval("new " + className + "({rate: " + rate + ",category:'" + category + "',lineWidth:2,titleWidth: 40})");
+                        divCanvasWrapper.setAttribute("data-attribute", JSON.stringify(obj.options));//将属性值存入dome中
                         var canvasReal = obj.createCanvas();
                         divCanvasWrapper.appendChild(canvasReal);
                         document.getElementById("drawing_wrapper").appendChild(divCanvasWrapper);
+                        tipInit(divCanvasWrapper.id);//初始化控件名称。
                         var c = $(divCanvasWrapper).find("canvas")[0];
                         $(divCanvasWrapper).scale({ canvas: c, id: divCanvasWrapper.id });//绑定缩放属性
                         var scaleDiv = $.createScale(c, divCanvasWrapper.id);//创建缩放控制层
@@ -96,8 +110,7 @@
                         if (category != "horizonlane") {
                             $(divCanvasWrapper).flowLine({ canvas: c, id: divCanvasWrapper.id });//绑定画线属性
                         }
-                        else
-                        {
+                        else {
                             //将泳道图及其缩放层的z-index调小
                             divCanvasWrapper.style.zIndex = 3;
                             scaleDiv.style.zIndex = 4;
